@@ -1,30 +1,40 @@
+var nums = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
+var suits = ['hearts', 'spades', 'clubs', 'diamonds']
 class Card{
-    constructor(num, suite){
+    constructor(num, suit){
         this.num = num
-        this.suite = suite
+        this.suit = suit
     }
     equals(other){
         return this.num==other.num && this.suite==other.suite
     }
     static getCards() {
-        var nums = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
-        var suits = ['hearts', 'spades', 'clubs', 'diamonds']
+        
         var cards = []
-    
-        for(var s=0;s<suits.length;s++)
-            for(var n=0;n<nums.length;n++)
-                cards.push(new Card(nums[n], suits[s]))
+        for(var s=0;s<52;s++)
+            cards.push(s)
     
         shuffle(cards)
         shuffle(cards)
     
         // then distribute the cards
-        return distribute(cards)
+        cards = distribute(cards)
+        for( var i=0; i<4; i++) cards[i] = grouped(cards[i])
+        return cards
     }
 }
 
 
-
+const grouped = (cards) => {
+    var result = [[], [], [], [], [], [], [], []]
+    cards.forEach((ele)=>{
+        suit = Math.floor(ele/13)
+        isUp = ele%13 >=7
+        index = suit * 2 + isUp
+        result[index].push(toCard(ele))
+    })
+    return result
+}
 const shuffle = (arr) =>{
     index = arr.length
     while(index != 0){
@@ -36,13 +46,29 @@ const shuffle = (arr) =>{
         arr[rand_index] = temp
     }
 }
-
-const distribute = (cards) => {
+const toCard = n => {
+    return {
+        num: nums[n%13],
+        suit: suits[Math.floor(n/13)]
+    }
+}
+const distribute = (nums) => {
     dist = [[],[],[],[]]
-    cards.forEach((card, item)=>{
-        dist[item % 4].push(card)
+    nums.forEach((ele, index)=>{
+        dist[index % 4].push(ele)
+    })
+    dist.forEach(row=>{
+        row.sort((x, y)=>x-y)
+        // row.forEach((ele, index)=>{
+        //     row[index] = toCard(ele)
+        // })
     })
     return dist
 }
 
 module.exports = Card
+
+// console.log(Card.getCards()[1])
+// L = []
+// for( var i=0; i< 52; i++) L.push(i)
+// console.log(grouped(L))

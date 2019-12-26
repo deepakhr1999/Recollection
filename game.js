@@ -39,8 +39,10 @@ class Game{
                 status: 'success',
                 state: this.state,
                 notes: 'your are in the game!',
-                data: this.players[temp.index]
+                data: this.players[temp.index],
+                others: []
             }
+            this.players.forEach(player => res.others.push({name:player.name, id: player.id}))
             return res
         }
     }

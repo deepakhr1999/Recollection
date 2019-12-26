@@ -1,6 +1,7 @@
 import json
 D = {}
-for i in range(2,11):
+l = list(range(2,11)) + ["J", "Q", "K", "A"]
+for i in l:
     with open(f'{i}.html', 'r') as file:
         D[i] = ""
         for line in file:

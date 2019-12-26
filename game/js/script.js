@@ -30,12 +30,13 @@ app.controller('connect', function($scope) {
         bring($scope.server, body)
         .then(resp => {
             // to do emit mssg
-            // if(resp.status == "success" ){
+            if(resp.status == "success" ){
                 state.server = $scope.server
                 state.id = req.params.id
                 state.name = req.params.name
                 state.password = req.password
-            // }
+                // document.getElementById('connect').style.display = "None"
+            }
             console.log(resp)
         })
         .catch(err=>console.log(err))
@@ -44,18 +45,30 @@ app.controller('connect', function($scope) {
 
 app.controller('cards', ($scope)=>{
     $scope.cards = []
+    $scope.name = "Connect"
+    $scope.id = ""
+    $scope.isMessage = true
+    $scope.messageType = "success"
+    $scope.text = "Welcome to the Game!" 
     $scope.ping = ()=>{
         req.command = "ping"
+        $scope.id = req.params.id
+        $scope.name = req.params.name
         bring(state.server, JSON.stringify(req))
         .then(resp => {
-            section = document.getElementById("cards")
-            x = ""
-            resp.data.cards.forEach((card)=>{
-                // console.log(card.num)
-                x = x + getCard(card.num, card.suite)
+            if(resp.status=="success") {$scope.messageType = "success"}
+            else {$scope.messageType = "danger"}
+            document.getElementById("alert").innerHTML = resp.notes
+            console.log($scope.text)
+            sections = document.querySelectorAll(".cards")
+            resp.data.cards.forEach((set, i)=>{
+                x = ""
+                set.forEach(card =>{
+                    x = x + getCard(card.num, card.suit)
+                })
+                sections[i].innerHTML = x
             })
-            section.innerHTML = x
-            console.log(resp)
+            displaySet(0)
         })
         .catch(err=> console.log(err))
     }
