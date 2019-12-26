@@ -1,8 +1,10 @@
 const express = require('express')
 var bodyParser = require('body-parser')
 const app = express()
-
+var cors = require('cors')
+app.use(cors())
 app.use(bodyParser.json())
+
 // app.use(bodyParser.urlencoded({ extended: false }))
 const Game = require('./game.js')
 
@@ -16,7 +18,8 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', (req, res)=>{
-    res.send(game.process(req.body))
+    // res.json(req.body)
+    res.json(game.process(req.body))
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/css/mdb.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cards.css">
+    <title>Hello, world!</title>
+  </head>
+  <body ng-app="myApp">
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark primary-color">
+
+      <!-- Navbar brand -->
+      <a class="navbar-brand" href="#">Literature</a>
+
+      <!-- Collapse button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+        aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="basicExampleNav">
+
+        
+      </div>
+      <!-- Collapsible content -->
+
+    </nav>
+<!--/.Navbar-->
+    <!-- Creds form -->
+    <div ng-controller="connect" class="container mt-2">
+      <legend>Credentials</legend>
+      <div class="d-flex mt-0">
+        <div class="md-form">
+          <input type="text" value="hello" class="form-control" ng-model="server">
+          <label>Server</label>
+        </div>
+        <div class="md-form">
+          <input type="password" value="hello" class="form-control" ng-model="password">
+          <label>Password</label>
+        </div>
+        <div class="md-form">
+          <input type="text" class="form-control" ng-model="id">
+          <label>Id</label>
+        </div>
+        <div class="md-form">
+          <input type="text" class="form-control" ng-model="name">
+          <label>Name</label>
+        </div>
+      </div>
+      <button class="btn btn-primary" ng-click="connect()">Connect</button>
+    </div>
+
+    <div class="container" ng-controller="cards">
+      <h3>Game</h3><hr>
+
+<!-- Hearts -->
+      <section class="cards container" id="cards">
+        
+      </section>
+      <button class="btn btn-primary btn-block" ng-click="ping()">Refresh</button>
+      </div>
+    </div>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/helpers.js"></script>
+    <!-- Optional JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/js/mdb.min.js"></script>
+  </body>
+</html>

@@ -7,7 +7,8 @@ class Game{
         this.state = 0
         this.broadcast = "Game init"
     }
-    process(request){
+    process(request){ // request {password, command, params}
+        console.log(request)
         if(this.password != request.password)
             return {
                 status: 'failed',
@@ -44,21 +45,22 @@ class Game{
         }
     }
 
-    connect(params){
+    connect(params){ //params: {id, name}
         let res = {
             status: 'failed',
             notes: 'None'
         }
 
-        // check number of people
-        if(this.players.length==4){
-            res.notes = "Game is already taken"
-            return res
-        }
-
         //check if the same person is there
         if(this.isInGame(params.id).found){
             res.notes = "You are already connected"
+            res.status = "success"
+            return res
+        }
+    
+        // check number of people
+        if(this.players.length==4){
+            res.notes = "Game is already taken"
             return res
         }
 
