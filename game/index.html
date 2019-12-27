@@ -10,58 +10,39 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="css/animate.css">
     <title>Hello, world!</title>
   </head>
-  <body ng-app="myApp">
-    <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark primary-color">
-
-      <!-- Navbar brand -->
-      <a class="navbar-brand" href="#">Literature</a>
-
-      <!-- Collapse button -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
-        aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <!-- Collapsible content -->
-      <div class="collapse navbar-collapse" id="basicExampleNav">
-
-        
-      </div>
-      <!-- Collapsible content -->
-
-    </nav>
-<!--/.Navbar-->
-    <!-- Creds form -->
-    <!-- <style>#connect{display: none;}</style> -->
-    <div ng-controller="connect" class="container mt-2" id='connect'>
-      <legend>Credentials</legend>
-      <div class="d-flex mt-0">
+  <body ng-app="myApp" style="background-image: url('img/cards.jpg'); background-attachment: fixed; background-size: cover;">
+    <div class="window" >
+      <div ng-controller="connect" class="container col-4 animated bounceInUp slow" id='connect'>
+        <legend class="danger-color-dark">Credentials</legend>
         <div class="md-form">
-          <input type="text" value="hello" class="form-control" ng-model="server">
+          <input type="text" value="h" class="form-control" ng-model="server">
           <label>Server</label>
         </div>
         <div class="md-form">
-          <input type="password" value="hello" class="form-control" ng-model="password">
+          <input type="text" value="h" class="form-control" ng-model="password">
           <label>Password</label>
         </div>
         <div class="md-form">
-          <input type="text" class="form-control" ng-model="id">
+          <input type="text" value="h" class="form-control" ng-model="id">
           <label>Id</label>
         </div>
         <div class="md-form">
-          <input type="text" class="form-control" ng-model="name">
+          <input type="text" value="h" class="form-control" ng-model="name">
           <label>Name</label>
         </div>
+        <div class="text-center">
+           <a class="btn danger-color-dark white-text col-6 mx-auto" ng-click="connect()" href="#cards">Connect</a>
+        </div>
       </div>
-      <button class="btn btn-primary" ng-click="connect()">Connect</button>
     </div>
-
-    <div class="container" ng-controller="cards">
+    <div class="window">
+      
+    <div class="container align-self-start" ng-controller="cards" id="cards">
       <!-- <style>#alert{display: none;}</style> -->
-        <div class="w-100 alert alert-{{ messageType }}" id="alert" onclick="this.style.display='none'">
+        <div class="w-100 alert alert-{{ messageType }}" id="alert" onclick="this.style.display='none'" style="display:none">
           {{ message }}
         </div>
         <div class="row align-items-center">
@@ -69,7 +50,7 @@
             <div class="h3 pt-3 mb-0">{{ name }}</div><p>@{{ id }}</p>
           </div>
           <div class="col-2" ng-repeat="p in otherPlayers">
-            <div class="h5 pt-3 mb-0">{{ p.name }}</div><p>@{{ p.id }}</p>
+            <div class="h5 pt-3 mb-0 animate">{{ p.name }}</div><p>@{{ p.id }}</p>
           </div>
           <button class="btn btn-primary mb-0" ng-click="ping()">Refresh</button>
         </div>
@@ -164,6 +145,8 @@
         <!-- Reponse form -->
         
       </div>
+    </div>
+    
     </div>
     <script type="text/javascript" src="js/script.js"></script>
     <script type="text/javascript" src="js/helpers.js"></script>

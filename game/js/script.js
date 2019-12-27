@@ -1,4 +1,4 @@
-var app = angular.module('myApp', []);
+var app = angular.module("myApp", []);
 
 var req = {
     password : "wagamama",
@@ -149,6 +149,7 @@ app.controller('cards', ($scope)=>{
             else{ // player made some error
                 $scope.message = resp.message
                 $scope.messageType = "danger"
+                M.style.display = ""
                 $scope.$digest()
                 throw new Error(resp.message)
             }
