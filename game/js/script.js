@@ -39,7 +39,7 @@ app.controller('connect', function($scope) {
                 state.password = req.password
                 // document.getElementById('connect').style.display = "None"
             }
-            console.log(resp)
+            console.log("Inside connect", resp)
         })
         .catch(err=>console.log(err))
     }
@@ -95,7 +95,7 @@ app.controller('cards', ($scope)=>{
         $scope.name = req.params.name
         bring(state.server, JSON.stringify(req))
         .then(resp => {
-            console.log(resp)
+            console.log("In ping", resp)
             if(resp.status == "failed") return
             // $scope.$digest();
             // if(resp.state == state.state) return
@@ -103,7 +103,7 @@ app.controller('cards', ($scope)=>{
             console.log("State change detected")
             state.state = resp.state
             $scope.messageType = setMessage(resp.status, resp.notes)
-            
+            $scope.broadcastType = setBroadcast(resp.message)
             // set cards
             sections = document.querySelectorAll(".cards")
             $scope.cards = resp.data.cards
@@ -133,11 +133,10 @@ app.controller('cards', ($scope)=>{
         req.params.card = {num:$scope.number, suit:$scope.suit}
         bring(state.server, JSON.stringify(req))
         .then(resp => {
-            console.log(resp)
+            console.log("Inside Play", resp)
             $scope.messageType = setMessage(resp.status, resp.notes)
             console.log($scope.messageType)
             if(resp.status=='success'){
-                $scope.broadcastType = setBroadcast(resp.broadcast)
                 $scope.ping()
             }else{//state has not increased
                 $scope.$digest()

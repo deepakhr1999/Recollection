@@ -33,7 +33,6 @@ const setBroadcast = (message) => {
     ele = document.getElementById("broadcast")
     ele.style.display = ""
     ele.innerHTML = message
-    return "danger"
     if(message.includes('not')) return "danger"
     else return "success"
 }
