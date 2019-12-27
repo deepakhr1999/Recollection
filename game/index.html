@@ -62,11 +62,7 @@
     <div class="container" ng-controller="cards">
       <!-- <style>#alert{display: none;}</style> -->
         <div class="w-100 alert alert-{{ messageType }}" id="alert" onclick="this.style.display='none'">
-          Welcome to the game!
-        </div>
-
-        <div class="w-100 alert alert-{{ broadcastType }}" id="broadcast" onclick="this.style.display='none'">
-          Click to load game
+          {{ message }}
         </div>
         <div class="row align-items-center">
           <div class="col">

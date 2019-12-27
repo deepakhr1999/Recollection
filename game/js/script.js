@@ -16,6 +16,9 @@ var state = {
     cards: [],
     server: "http://192.168.2.110:3000"
 }
+
+M = document.getElementById("alert")
+
 app.controller('connect', function($scope) {
     $scope.print = console.log;
     $scope.server = "http://192.168.2.110:3000"
@@ -95,15 +98,23 @@ app.controller('cards', ($scope)=>{
         $scope.name = req.params.name
         bring(state.server, JSON.stringify(req))
         .then(resp => {
-            console.log("In ping", resp)
-            if(resp.status == "failed") return
-            // $scope.$digest();
-            // if(resp.state == state.state) return
+            console.log("In ping", resp)            
+            $scope.message = resp.message
 
+            if(resp.status == "failed"){
+                // display message and refresh vars
+                $scope.messageType = "danger"
+                $scope.$digest()
+                return
+            }
+
+            // if there was no state change nor status failed
+            // there is no message
+            if(resp.state == state.state) return
             console.log("State change detected")
+            $scope.messageType = "success"
+            M.style.display = ""
             state.state = resp.state
-            $scope.messageType = setMessage(resp.status, resp.notes)
-            $scope.broadcastType = setBroadcast(resp.message)
             // set cards
             sections = document.querySelectorAll(".cards")
             $scope.cards = resp.data.cards
@@ -134,13 +145,12 @@ app.controller('cards', ($scope)=>{
         bring(state.server, JSON.stringify(req))
         .then(resp => {
             console.log("Inside Play", resp)
-            $scope.messageType = setMessage(resp.status, resp.notes)
-            console.log($scope.messageType)
-            if(resp.status=='success'){
-                $scope.ping()
-            }else{//state has not increased
+            if(resp.status=='success')$scope.ping()
+            else{ // player made some error
+                $scope.message = resp.message
+                $scope.messageType = "danger"
                 $scope.$digest()
-                throw new Error(resp.notes)
+                throw new Error(resp.message)
             }
         })
         .catch(err => console.log(err))

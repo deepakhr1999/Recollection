@@ -13,7 +13,7 @@ class Game{
         if(this.password != request.password)
             return {
                 status: 'failed',
-                notes: 'authentication failure'
+                message: 'authentication failure'
             }
         console.log(`${request.command} was called with params\n${JSON.stringify(request.params)}\n`)
         if(typeof this[request.command] === "function")
@@ -38,7 +38,7 @@ class Game{
         // console.log(temp)
         let res = {
             status: "failure", 
-            notes: 'You have not connected to the game'
+            message: 'You have not connected to the game'
         }
         if(!temp.found)
             return res
@@ -46,7 +46,6 @@ class Game{
             res = {
                 status: 'success',
                 state: this.state,
-                notes: 'Continue Game',
                 message: this.broadcast,
                 data: this.players[temp.index],
                 others: [],
@@ -61,24 +60,25 @@ class Game{
     connect(params){ //params: {id, name}
         let res = {
             status: 'failed',
-            notes: 'None'
+            message: 'None'
         }
 
         //check if the same person is there
         if(this.isInGame(params.id).found){
-            res.notes = "Reconnected"
+            res.message = "Reconnected"
             res.status = "success"
+            this.state++
             return res
         }
     
         // check number of people
         if(this.players.length==4){
-            res.notes = "Game is already taken"
+            res.message = "Game is already taken"
             return res
         }
 
         res.status = "success"
-        res.notes = "Connection successfull"
+        res.message = "Connection successfull"
 
         // update players
         this.state++
@@ -104,20 +104,20 @@ class Game{
         // check if opponent is in game
         console.log("turn is ", this.turn)
         params.card = new Card(params.card.num, params.card.suit)
-        if(this.turn != params.id) return {status:"failed", notes:"Oops! not your turn yet"}
+        if(this.turn != params.id) return {status:"failed", message:"Oops! not your turn yet"}
         var temp = this.isInGame(params.opp) 
-        if(! temp.found) return {status: "failed", notes:"Opponent not in game!"}
+        if(! temp.found) return {status: "failed", message:"Opponent not in game!"}
 
         // check if the user has the card
         var self = this.isInGame(params.id)
-        if(! self.found) return {status: "failed", notes:"You are not in game!"}
+        if(! self.found) return {status: "failed", message:"You are not in game!"}
         self = this.players[self.index]
         self.cards.forEach(l=>console.log(l))
-        if(self.queryCard(params.card).found) return {status: "failed", notes: "Cannot ask your own card"}
+        if(self.queryCard(params.card).found) return {status: "failed", message: "Cannot ask your own card"}
 
         //check if user has a card in the set
         var setIndex = params.card.toSet()
-        if(self.cards[setIndex].length==0)return {status: "failed", notes: "Cannot ask if you have empty set"}
+        if(self.cards[setIndex].length==0)return {status: "failed", message: "Cannot ask if you have empty set"}
 
         // valid query, so increment state
         this.state++
@@ -128,15 +128,15 @@ class Game{
 
         var resp = {}
         if(isRemoved){
-            resp =  {status: "success", notes:`Removed ${params.card.num} ${params.card.suit} from ${opponent.name}!`}
+            resp =  {status: "success", message:`Removed ${params.card.num} ${params.card.suit} from ${opponent.name}!`}
             // add the card to asker
             self.cards[setIndex].push(params.card)
         }
         else {
             this.turn = opponent.id
-            resp = {status: "failed", notes: `${opponent.name} does not have ${params.card.num} ${params.card.suit}`}
+            resp = {status: "failed", message: `${opponent.name} does not have ${params.card.num} ${params.card.suit}`}
         }
-        this.broadcast = resp.notes
+        this.broadcast = resp.message
         console.log("responded with ")
         console.log(resp)
         return resp
