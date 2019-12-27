@@ -6,13 +6,16 @@
   .card {
 	position: relative;
 	display: inline-block;
-	width: 172px;
-	height: 240px;
+  width: 172px;
+  height: 240px;
+  /* width: 86px;
+  height: 120px; */
 	font: 15px 'Trebuchet MS';
 	margin: 10px;
 	border-radius: 4px;
 	background: #fff;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+  /* transform: scale(0.5); */
   }
   .card:before,
   .card:after {
@@ -30,7 +33,7 @@
 	bottom: 4px;
 	right: 4px;
 	-webkit-transform: rotate(180deg);
-			transform: rotate(180deg);
+      transform: rotate(180deg);
   }
   .card--hearts {
 	color: #e44145;

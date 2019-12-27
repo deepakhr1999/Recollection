@@ -6,10 +6,10 @@ class Card{
         this.suit = suit
     }
     equals(other){
-        return this.num==other.num && this.suite==other.suite
+        // console.log(this, other)
+        return this.num==other.num && this.suit==other.suit
     }
     static getCards() {
-        
         var cards = []
         for(var s=0;s<52;s++)
             cards.push(s)
@@ -21,6 +21,13 @@ class Card{
         cards = distribute(cards)
         for( var i=0; i<4; i++) cards[i] = grouped(cards[i])
         return cards
+    }
+
+    toSet(){
+        var s = suits.indexOf(this.suit)
+        var n = nums.indexOf(this.num)
+        if(n>=7) return 2*s+1
+        return 2*s
     }
 }
 
@@ -46,12 +53,9 @@ const shuffle = (arr) =>{
         arr[rand_index] = temp
     }
 }
-const toCard = n => {
-    return {
-        num: nums[n%13],
-        suit: suits[Math.floor(n/13)]
-    }
-}
+
+const toCard = n => new Card(nums[n%13], suits[Math.floor(n/13)])
+
 const distribute = (nums) => {
     dist = [[],[],[],[]]
     nums.forEach((ele, index)=>{

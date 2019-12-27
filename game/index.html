@@ -35,6 +35,7 @@
     </nav>
 <!--/.Navbar-->
     <!-- Creds form -->
+    <!-- <style>#connect{display: none;}</style> -->
     <div ng-controller="connect" class="container mt-2" id='connect'>
       <legend>Credentials</legend>
       <div class="d-flex mt-0">
@@ -59,36 +60,96 @@
     </div>
 
     <div class="container" ng-controller="cards">
-      <div class="row align-items-center">
-        <div class="col">
-          <div class="h3 pt-3 mb-0">{{ name }}</div><p>@{{ id }}</p>
+      <!-- <style>#alert{display: none;}</style> -->
+        <div class="w-100 alert alert-{{ messageType }}" id="alert" onclick="this.style.display='none'">
+          Welcome to the game!
         </div>
-        <button class="btn btn-primary mb-0" ng-click="ping()">Refresh</button>
-      </div><hr>
+
+        <div class="w-100 alert alert-{{ broadcastType }}" id="broadcast" onclick="this.style.display='none'">
+          Click to load game
+        </div>
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="h3 pt-3 mb-0">{{ name }}</div><p>@{{ id }}</p>
+          </div>
+          <div class="col-2" ng-repeat="p in otherPlayers">
+            <div class="h5 pt-3 mb-0">{{ p.name }}</div><p>@{{ p.id }}</p>
+          </div>
+          <button class="btn btn-primary mb-0" ng-click="ping()">Refresh</button>
+        </div>
+        
+        <div class="row">
+            <div class="col-8 row">
+                <!-- number -->
+                <div class="col-4">
+                      <div class="input-group mb-3">
+                        <select class="browser-default custom-select" ng-model='number'>
+                          <option value="A">A</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                          <option value="J">J</option>
+                          <option value="Q">Q</option>
+                          <option value="K">K</option>
+                        </select>
+                        <div class="input-group-append">
+                          <label class="input-group-text">Number</label>
+                        </div>
+                      </div>
+                </div>
+                <!-- suit -->
+                <div class="col-4">
+                        <div class="input-group mb-3">
+                          <select class="browser-default custom-select" ng-model='suit'>
+                            <option value="hearts">hearts</option>
+                            <option value="spades">spades</option>
+                            <option value="diamonds">diamonds</option>
+                            <option value="clubs">clubs</option>
+                          </select>
+                          <div class="input-group-append">
+                            <label class="input-group-text">Suit</label>
+                          </div>
+                        </div>
+                </div>
+                <!-- opponent -->
+                <div class="col-8">
+                    <div class="input-group mb-3">
+                      <select class="browser-default custom-select" ng-model='askedOpponent'>
+                        <option value="{{ otherPlayers[1].id }}"> {{otherPlayers[1].name}} @{{otherPlayers[1].id}}</option>
+                        <option value="{{ otherPlayers[2].id }}"> {{otherPlayers[2].name}} @{{otherPlayers[2].id}}</option>
+                      </select>
+                      <div class="input-group-append">
+                        <label class="input-group-text">Opponent</label>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <button ng-click="play()" class="col-4 btn btn-primary">Ask {{number}} {{ suit }}</button>
+        </div>
+      
+        <hr>
       
       <div class="row">
         <div class="col">
           <!-- Menu -->
           <section class="row justify-content-center">
-          <div>
-            <button onclick="displaySet(1)" class="btn btn-primary">Hearts <br> Upper</button index=><br>
-            <button onclick="displaySet(0)" class="btn primary-color-dark text-white">Hearts <br> Lower</button>
-          </div>       
-
-          <div>
-            <button onclick="displaySet(3)" class="btn btn-primary">Spades <br> Upper</button><br>
-            <button onclick="displaySet(2)" class="btn primary-color-dark text-white">Spades <br> Lower</button>
-          </div>
-    
-          <div>
-            <button onclick="displaySet(5)" class="btn btn-primary">Clubs <br> Upper</button><br>
-            <button onclick="displaySet(4)" class="btn primary-color-dark text-white">Clubs <br> Lower</button>
-          </div>
-
-          <div>
-            <button onclick="displaySet(7)" class="btn btn-primary">Diamonds <br> Upper</button><br>
-            <button onclick="displaySet(6)" class="btn primary-color-dark text-white">Diamonds <br> Lower</button>
-          </div>
+        
+            <button ng-click="displaySet(1)" style="border-radius: 0;" class="btn btn-primary m-0 col-2">Hearts Upper</button>
+            <button ng-click="displaySet(3)" style="border-radius: 0;" class="btn btn-primary m-0 col-2">Spades Upper</button>
+            <button ng-click="displaySet(5)" style="border-radius: 0;" class="btn btn-primary m-0 col-2">Clubs Upper</button>
+            <button ng-click="displaySet(7)" style="border-radius: 0;" class="btn btn-primary m-0 col-2">Diamonds Upper</button>
+            <div class="w-100"></div>
+            <button ng-click="displaySet(0)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Hearts Lower</button>
+            <button ng-click="displaySet(2)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Spades Lower</button>
+            <button ng-click="displaySet(4)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Clubs Lower</button>
+            <button ng-click="displaySet(6)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Diamonds Lower</button>
+        
           </section>
           <!-- Cards -->
           <section class="cards container"></section>      
@@ -105,46 +166,7 @@
         </div>
 
         <!-- Reponse form -->
-        <div class="col">
-            <div class="alert alert-{{ messageType }}" id="alert">
-              Welcome to the game!
-            </div>
-          <div class="input-group mb-3">
-            <select class="browser-default custom-select" ng-model='suit'>
-              <option selected>Choose...</option>
-              <option value="hearts">hearts</option>
-              <option value="spades">spades</option>
-              <option value="diamonds">diamonds</option>
-              <option value="clubs">clubs</option>
-            </select>
-            <div class="input-group-append">
-              <label class="input-group-text">Suit</label>
-            </div>
-          </div>
-          <div class="input-group mb-3">
-            <select class="browser-default custom-select" ng-model='number'>
-              <option selected>Choose...</option>
-              <option value="A">A</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-              <option value="J">J</option>
-              <option value="Q">Q</option>
-              <option value="K">K</option>
-            </select>
-            <div class="input-group-append">
-              <label class="input-group-text">Number</label>
-            </div>
-          </div>
-          <button class="btn btn-primary btn-block">Ask {{number}} of {{ suit }}</button>
-          <p></p>
-        </div>
+        
       </div>
     </div>
     <script type="text/javascript" src="js/script.js"></script>

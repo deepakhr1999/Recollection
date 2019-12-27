@@ -8,9 +8,12 @@ class Person{
     }
     
     queryCard(Q){
+        console.log("QUery called")
         for(var i=0; i<this.cards.length; i++){
-            if(this.cards[i].equals(Q)){
-                return {found: true, index: i}
+            for(var j=0; j<this.cards[i].length; j++){
+                if(this.cards[i][j].equals(Q)){
+                    return {found: true, index:[i, j]}
+                }
             }
         }
         return {found:false}
@@ -19,16 +22,19 @@ class Person{
     removeCard(Q){
         var ret = this.queryCard(Q)
         if(ret.found){
-            this.cards.splice(ret.index, 1)
+            let [i, j] = ret.index 
+            this.cards[i].splice(j, 1)
             console.log("Deleted", Q, "from", this.id)
         }else{
             console.log(Q, "not found")
         }
+        return ret.found
     }
 }
 
 module.exports = Person
-// let me = new Person('98203rj0y3rn0h', Card.getCards()[1])
-// console.log(me)
-// var Q = new Card('2', 'hearts')
+// let me = new Person('98203rj0y3rn0h', "deepak")
+// me.cards = Card.getCards()[1]
+// me.cards.forEach(l=>console.log(l))
+// var Q = new Card('10', 'hearts')
 // me.removeCard(Q)
