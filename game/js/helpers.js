@@ -36,3 +36,17 @@ const setBroadcast = (message) => {
     if(message.includes('not')) return "danger"
     else return "success"
 }
+
+
+const putMessage = (flag, message)=>{
+    div = document.getElementById("messages")
+    node = document.createElement("div")
+    node.innerHTML = message
+    classes = "w-100 alert alert-"+flag+" animated bounceInUp slow"
+    node.classList.add(...classes.split(" "))
+    div.appendChild(node)
+    setTimeout(function(){
+        L = div.childNodes;n = L.length - 1;
+        div.removeChild(L[n])
+    }, 6000)
+}

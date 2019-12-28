@@ -7,6 +7,8 @@ class Game{
         this.state = 0
         this.broadcast = "Game init"
         this.id = "hellothere"
+        this.wins = [[], []]
+        this.turn = ""
     }
     process(request){ // request {password, command, params}
         // console.log(request)
@@ -19,7 +21,6 @@ class Game{
         if(typeof this[request.command] === "function")
             return this[request.command](request.params)
     }
-
     isInGame(id){
         var mate = 0
         var opp = []
@@ -27,7 +28,7 @@ class Game{
             if (i%2 == 0) mate = i+1; else mate = i-1
             if(i>=2) opp = [0,1]; else opp = [2,3]
             if(this.players[i].id == id){
-                return {found: true, index : i, mate: mate, opp: opp}
+                return {found: true, index : i, mate: mate, opp: opp, team: Math.floor(i/2)}
             }
         }
         return {found: false}
@@ -50,7 +51,8 @@ class Game{
                 data: this.players[temp.index],
                 others: [],
                 mate : temp.mate,
-                opp : temp.opp
+                opp : temp.opp,
+                turn: this.turn
             }
             this.players.forEach(player => res.others.push({name:player.name, id: player.id}))
             return res
@@ -128,17 +130,53 @@ class Game{
 
         var resp = {}
         if(isRemoved){
-            resp =  {status: "success", message:`Removed ${params.card.num} ${params.card.suit} from ${opponent.name}!`}
+            resp =  {status: "success", message:`Removed ${params.card.num} ${params.card.suit} from ${opponent.name}!`, flag:"success"}
             // add the card to asker
             self.cards[setIndex].push(params.card)
         }
         else {
             this.turn = opponent.id
-            resp = {status: "failed", message: `${opponent.name} does not have ${params.card.num} ${params.card.suit}`}
+            resp = {status: "success", message: `${opponent.name} does not have ${params.card.num} ${params.card.suit}`, flag:"danger"}
         }
         this.broadcast = resp.message
         console.log("responded with ")
         console.log(resp)
+        return resp
+    }
+
+    call(params){ // id, name, set(number)
+        var stats = this.isInGame(params.id)
+        if(!stats.found){//then the person is not in game
+            return {status: "failed", message: "You are not in game", "flag": "danger"}
+        }
+        if(params.set>7 || params.set<0)
+            return {status: "failed", message: "Bad request with index "+params.set, "flag": "danger"}
+        
+        var selfCards = this.players[stats.index].cards[params.set]
+        if(selfCards.length==0)
+            return {status: "failed", message: "Cannot ask if you have empty set", "flag": "danger"}
+
+        // this is a valid call
+        this.state++
+
+        // check if they collectively have the entire set
+        var mateCards = this.players[stats.mate].cards[params.set]
+        var allCards = selfCards.concat(mateCards)
+        var isLower = params.set%2
+        var correct = false        
+        if(isLower) correct = (allCards.length == 7)
+        else correct = (allCards.length == 6)
+        //either way removeSet from everyone 
+        this.players.forEach((p)=>p.removeSet(params.set))
+        var team = correct*stats.team + !correct * !stats.team
+        this.wins[team].push(params.set)
+        if(correct){
+            resp = {status:'success', message: `Call by ${params.id} success! got the set ${params.set}`, "flag":"success"}
+        }
+        else{
+            resp = {status: 'success', message:`Call by ${params.id} FAILED! got the set ${params.set}`, "flag": "danger"}
+        }
+        this.broadcast = resp.message
         return resp
     }
 }

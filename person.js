@@ -30,6 +30,10 @@ class Person{
         }
         return ret.found
     }
+
+    removeSet(index){
+        this.cards[index] = []
+    }
 }
 
 module.exports = Person

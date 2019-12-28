@@ -114,6 +114,7 @@ app.controller('cards', ($scope)=>{
             console.log("State change detected")
             $scope.messageType = "success"
             M.style.display = ""
+            console.log("display is"+ M.style.display+" wagamama")
             state.state = resp.state
             // set cards
             sections = document.querySelectorAll(".cards")
@@ -131,13 +132,21 @@ app.controller('cards', ($scope)=>{
             $scope.setPlayer(2, resp.others[resp.opp[0]])
             $scope.setPlayer(3, resp.others[resp.opp[1]])
 
+            //display whose turn this is *resp.turn
+            document.querySelectorAll(".turn")[0].classList.remove("turn")
+            
+            
+            if(resp.turn != "")
+                setTimeout(function(){document.getElementById("id-"+resp.turn).classList.add("turn")}, 500)
+                
+            
             // diplay set
             $scope.displaySet($scope.set)
             $scope.$digest();
         })
         .catch(err=> console.log(err))
     }
-
+    setInterval($scope.ping, 3000)
     $scope.play = ()=>{
         req.command = "play"
         req.params.opp = $scope.askedOpponent
@@ -155,5 +164,23 @@ app.controller('cards', ($scope)=>{
             }
         })
         .catch(err => console.log(err))
+    }
+
+    $scope.call = ()=>{
+        req.command = "call"
+        req.params.set = $scope.set
+        bring(state.server, JSON.stringify(resp))
+        .then(resp=>{
+            console.log("Inside Call", resp)
+            $scope.messageType = resp.flag
+            if(resp.status=='success')$scope.ping()
+            else{ // player made some error
+                $scope.message = resp.message
+                M.style.display = ""
+                $scope.$digest()
+                throw new Error(resp.message)
+            }
+        })
+        .catch(err=> console.log(err))
     }
 })

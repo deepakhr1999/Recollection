@@ -42,15 +42,19 @@
       
     <div class="container align-self-start" ng-controller="cards" id="cards">
       <!-- <style>#alert{display: none;}</style> -->
-        <div class="w-100 alert alert-{{ messageType }}" id="alert" onclick="this.style.display='none'" style="display:none">
-          {{ message }}
-        </div>
-        <div class="row align-items-center">
-          <div class="col">
-            <div class="h3 pt-3 mb-0">{{ name }}</div><p>@{{ id }}</p>
+        <div class="row mb-3 align-items-center">
+          <div class="col turn" id="id-{{id}}">
+            <div class="h3 pt-3 mb-0" >{{ name }}</div>
+            <p>@{{ id }}</p>
           </div>
-          <div class="col-2" ng-repeat="p in otherPlayers">
-            <div class="h5 pt-3 mb-0 animate">{{ p.name }}</div><p>@{{ p.id }}</p>
+          <div class="col-2" id="id-{{ otherPlayers[0].id }}">
+            <div class="h5 pt-3 mb-0 animate">{{otherPlayers[0].name}}</div><p>@{{ otherPlayers[0].id }}</p>
+          </div>
+          <div class="col-2" id="id-{{ otherPlayers[1].id }}">
+            <div class="h5 pt-3 mb-0 animate">{{otherPlayers[1].name}}</div><p>@{{ otherPlayers[1].id }}</p>
+          </div>
+          <div class="col-2" id="id-{{ otherPlayers[2].id }}">
+            <div class="h5 pt-3 mb-0 animate">{{otherPlayers[2].name}}</div><p>@{{ otherPlayers[2].id }}</p>
           </div>
           <button class="btn btn-primary mb-0" ng-click="ping()">Refresh</button>
         </div>
@@ -113,7 +117,7 @@
         <hr>
       
       <div class="row">
-        <div class="col">
+        <div class="col" style="min-height: 370px;">
           <!-- Menu -->
           <section class="row justify-content-center">
         
@@ -141,7 +145,10 @@
           <section class="cards container"></section>
           <section class="cards container"></section>
         </div>
-
+        
+        <div class="w-100 alert alert-{{ messageType }}" id="alert" onclick="this.style.display='none'" style="display:none">
+          {{ message }}
+        </div>
         <!-- Reponse form -->
         
       </div>
