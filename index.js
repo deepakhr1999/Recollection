@@ -1,15 +1,16 @@
 const express = require('express')
 var bodyParser = require('body-parser')
-const app = express()
 var cors = require('cors')
+
+const app = express()
 app.use(cors())
 app.use(bodyParser.json())
-
 // app.use(bodyParser.urlencoded({ extended: false }))
-const Game = require('./game.js')
 
+const Game = require('./game.js')
+const ipconfig = require('./ipconfig.js')
 const port = 3000
-password = "wagamama"
+const password = "wagamama"
 
 let game = new Game(password)
 
@@ -22,4 +23,7 @@ app.post('/', (req, res)=>{
     res.json(game.process(req.body))
 })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => {
+    console.log(`App running on ${port}!`)
+    console.log(ipconfig())
+})
