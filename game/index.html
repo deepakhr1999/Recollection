@@ -4,10 +4,11 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/css/mdb.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <link rel="stylesheet" href="downloaded/css/all.css">
+    <link href="downloaded/css/bootstrap.min.css" rel="stylesheet">
+    <link href="downloaded/css/mdb.min.css" rel="stylesheet">
+    <link href="downloaded/fonts/Raleway.css" rel="stylesheet">
+    <script src="downloaded/js/angular.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cards.css">
     <link rel="stylesheet" href="css/animate.css">
@@ -60,9 +61,9 @@
         </div>
         
         <div class="row">
-            <div class="col-8 row">
+            <div class="col-6 row">
                 <!-- number -->
-                <div class="col-4">
+                <div class="col">
                       <div class="input-group mb-3">
                         <select class="browser-default custom-select" ng-model='number'>
                           <option value="A">A</option>
@@ -85,7 +86,7 @@
                       </div>
                 </div>
                 <!-- suit -->
-                <div class="col-4">
+                <div class="col">
                         <div class="input-group mb-3">
                           <select class="browser-default custom-select" ng-model='suit'>
                             <option value="hearts">hearts</option>
@@ -111,7 +112,8 @@
                     </div>
                 </div>
             </div>
-            <button ng-click="play()" class="col-4 btn btn-primary">Ask {{number}} {{ suit }}</button>
+            <button ng-click="call()" class="btn btn-dark col-3">Call</button>
+            <button ng-click="play()" class="col-3 btn btn-primary">Ask {{number}} {{ suit }}</button>
         </div>
       
         <hr>
@@ -120,7 +122,6 @@
         <div class="col" style="min-height: 370px;">
           <!-- Menu -->
           <section class="row justify-content-center">
-        
             <button ng-click="displaySet(1)" style="border-radius: 0;" class="btn btn-primary m-0 col-2">Hearts Upper</button>
             <button ng-click="displaySet(3)" style="border-radius: 0;" class="btn btn-primary m-0 col-2">Spades Upper</button>
             <button ng-click="displaySet(5)" style="border-radius: 0;" class="btn btn-primary m-0 col-2">Clubs Upper</button>
@@ -130,7 +131,6 @@
             <button ng-click="displaySet(2)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Spades Lower</button>
             <button ng-click="displaySet(4)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Clubs Lower</button>
             <button ng-click="displaySet(6)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Diamonds Lower</button>
-        
           </section>
           <!-- Cards -->
           <section class="cards container"></section>      
@@ -158,9 +158,9 @@
     <script type="text/javascript" src="js/script.js"></script>
     <script type="text/javascript" src="js/helpers.js"></script>
     <!-- Optional JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/js/mdb.min.js"></script>
+    <script type="text/javascript" src="downloaded/js/jquery.min.js"></script>
+    <script type="text/javascript" src="downloaded/js/popper.min.js"></script>
+    <script type="text/javascript" src="downloaded/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="downloaded/js/mdb.min.js"></script>
   </body>
 </html>

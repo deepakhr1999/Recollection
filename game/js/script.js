@@ -14,14 +14,14 @@ var state = {
     name: "",
     state: 0,
     cards: [],
-    server: "http://192.168.2.110:3000"
+    server: "http://10.196.8.226:3000"
 }
 
 M = document.getElementById("alert")
 
 app.controller('connect', function($scope) {
-    $scope.print = console.log;
-    $scope.server = "http://192.168.2.110:3000"
+    $scope.print = console.log
+    $scope.server = state.server
     $scope.password = "wagamama"
     $scope.connect = ()=> {
         req.password = $scope.password
@@ -169,7 +169,7 @@ app.controller('cards', ($scope)=>{
     $scope.call = ()=>{
         req.command = "call"
         req.params.set = $scope.set
-        bring(state.server, JSON.stringify(resp))
+        bring(state.server, JSON.stringify(req))
         .then(resp=>{
             console.log("Inside Call", resp)
             $scope.messageType = resp.flag

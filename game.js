@@ -92,9 +92,6 @@ class Game{
         if(this.players.length==4){
             this.turn = this.players[0].id
             Card.getCards().forEach((set, index)=>{
-                // console.log(index)
-                // console.log("--------------------")
-                // console.log(JSON.stringify(set))
                 this.players[index].cards = set
             })
         }
@@ -145,6 +142,7 @@ class Game{
     }
 
     call(params){ // id, name, set(number)
+        console.log("Called call function")
         var stats = this.isInGame(params.id)
         if(!stats.found){//then the person is not in game
             return {status: "failed", message: "You are not in game", "flag": "danger"}
@@ -170,6 +168,7 @@ class Game{
         this.players.forEach((p)=>p.removeSet(params.set))
         var team = correct*stats.team + !correct * !stats.team
         this.wins[team].push(params.set)
+        var resp = {}
         if(correct){
             resp = {status:'success', message: `Call by ${params.id} success! got the set ${params.set}`, "flag":"success"}
         }
