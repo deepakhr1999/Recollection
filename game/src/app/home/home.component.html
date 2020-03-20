@@ -1,4 +1,14 @@
-<div class="mat-app-background">
-    <h1>Hello world</h1>
-
+<div class="mat-app-background center">
+    <form class="login-form">
+        <legend>Login Form</legend>
+        <div class="md-form">
+            <input mdbInput type="text" name="text" [(ngModel)]="server" class="form-control">
+            <label>Server IP</label>
+        </div>
+        <div class="md-form">
+            <input mdbInput type="text" name="text" [(ngModel)]="username" class="form-control">
+            <label>Username</label>
+        </div>
+        <a href='/game' type="button" mdbBtn color="danger" mdbWavesEffect>Danger</a>
+      </form>      
 </div>

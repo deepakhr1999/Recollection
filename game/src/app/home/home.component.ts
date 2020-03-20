@@ -6,11 +6,8 @@ import { async } from '@angular/core/testing';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
 
-  constructor() { }
-  
-  ngOnInit() : void {
-  }
-
+export class HomeComponent{//} implements OnInit {
+  server: string = '';
+  username: string = '';
 }
