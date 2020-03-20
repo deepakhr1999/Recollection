@@ -10,6 +10,7 @@ class Game{
         this.wins = [[], []]
         this.turn = ""
     }
+
     process(request){ // request {password, command, params}
         // console.log(request)
         if(this.password != request.password)
@@ -21,6 +22,7 @@ class Game{
         if(typeof this[request.command] === "function")
             return this[request.command](request.params)
     }
+
     isInGame(id){
         var mate = 0
         var opp = []
@@ -164,17 +166,22 @@ class Game{
         var correct = false        
         if(isLower) correct = (allCards.length == 7)
         else correct = (allCards.length == 6)
+
         //either way removeSet from everyone 
         this.players.forEach((p)=>p.removeSet(params.set))
+
+        // then give the set to the winning team
         var team = correct*stats.team + !correct * !stats.team
         this.wins[team].push(params.set)
+
+        // construct a response
         var resp = {}
-        if(correct){
+        if(correct) {
             resp = {status:'success', message: `Call by ${params.id} success! got the set ${params.set}`, "flag":"success"}
-        }
-        else{
+        } else {
             resp = {status: 'success', message:`Call by ${params.id} FAILED! got the set ${params.set}`, "flag": "danger"}
         }
+
         this.broadcast = resp.message
         return resp
     }
