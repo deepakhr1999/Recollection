@@ -1,4 +1,9 @@
-<div>
-    <p>Game Works</p>
-
+<div class='container'>
+    <div class='row' *ngFor='let row of cards'>
+        <div class="col" *ngFor='let card of row'>
+            <p>{{ card.suit }}</p>
+            <br>
+            <p>{{ card.rank }}</p>
+        </div>
+    </div>
 </div>
