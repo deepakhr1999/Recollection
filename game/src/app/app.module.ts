@@ -10,11 +10,13 @@ import { AppComponent } from './app.component'
 // import { MatSliderModule } from '@angular/material/slider';
 import { MaterialModule } from './material'
 import { HomeComponent } from './home/home.component'
+import { GameComponent } from './game/game.component'
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,

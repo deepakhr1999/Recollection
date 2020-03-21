@@ -1,7 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
 @import '@angular/material/prebuilt-themes/pink-bluegrey.css';
-*{  margin: 0px; }
+// *{  margin: 0px; }
 
-.mat-app-background{
-    min-height: 100vh;
+html, body {
+  height: 100%;
+  margin: 0;
+
+  app-root{
+    display: flex;
+    flex-flow: column;
+    height: 100vh;
+
+    mdb-navbar { flex: 0 1 auto;}
+    .content { flex: 1 1 auto;}
+  }
+}
+
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
