@@ -12,6 +12,11 @@ import { MaterialModule } from './material'
 import { HomeComponent } from './home/home.component'
 import { GameComponent } from './game/game.component'
 
+import { StoreModule, ActionReducerMap } from '@ngrx/store'
+import { reducer } from './state/state.reducer'
+import { AppState } from './state/state.model'
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +28,10 @@ import { GameComponent } from './game/game.component'
     AppRoutingModule,
     MaterialModule,
     FormsModule,
-    MDBBootstrapModule.forRoot() 
+    MDBBootstrapModule.forRoot() ,
+    StoreModule.forRoot({
+      layout: reducer
+    })
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [],

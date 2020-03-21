@@ -1,9 +1,74 @@
 <div class='container'>
-    <div class='row' *ngFor='let row of cards'>
-        <div class="col" *ngFor='let card of row'>
-            <p>{{ card.suit }}</p>
-            <br>
-            <p>{{ card.rank }}</p>
+    <h1>Welcome {{ name | async }}!</h1>
+    <p>Cards</p>
+
+    <!-- Hearts -->
+    <div class="row align-items-stretch mb-3">
+        <h1 class="col col-sm-2 p-3 center">♥</h1>
+        <div class="col">
+            <div class="row">
+                <ul class="col p-3 list-group list-group-horizontal-xl">
+                    <li *ngFor="let card of (deck | async).hearts.upper; let i=index" class='list-group-item list-group-item-secondary'>{{ card.rank }}</li>
+                </ul>
+            </div>
+            <div class="row">
+                <ul class="col p-3 list-group list-group-horizontal-xl">
+                    <li *ngFor="let card of (deck | async).hearts.lower; let i=index" class='list-group-item list-group-item-secondary'>{{ card.rank }}</li>
+                </ul>
+            </div>
         </div>
     </div>
+
+    <!-- Diamonds -->
+    <div class="row align-items-stretch mb-3">
+        <h1 class="col col-sm-2 p-3 center">♦</h1>
+        <div class="col">
+            <div class="row">
+                <ul class="col p-3 list-group list-group-horizontal-xl">
+                    <li *ngFor="let card of (deck | async).diamonds.upper; let i=index" class='list-group-item list-group-item-secondary'>{{ card.rank }}</li>
+                </ul>
+            </div>
+            <div class="row">
+                <ul class="col p-3 list-group list-group-horizontal-xl">
+                    <li *ngFor="let card of (deck | async).diamonds.lower; let i=index" class='list-group-item list-group-item-secondary'>{{ card.rank }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Spades -->
+    <div class="row align-items-stretch mb-3">
+        <h1 class="col col-sm-2 p-3 center">♠</h1>
+        <div class="col">
+            <div class="row">
+                <ul class="col p-3 list-group list-group-horizontal-xl">
+                    <li *ngFor="let card of (deck | async).spades.upper; let i=index" class='list-group-item list-group-item-secondary'>{{ card.rank }}</li>
+                </ul>
+            </div>
+            <div class="row">
+                <ul class="col p-3 list-group list-group-horizontal-xl">
+                    <li *ngFor="let card of (deck | async).spades.lower; let i=index" class='list-group-item list-group-item-secondary'>{{ card.rank }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clubs -->
+    <div class="row align-items-stretch mb-3">
+        <h1 class="col col-sm-2 p-3 center">♣</h1>
+        <div class="col">
+            <div class="row">
+                <ul class="col p-3 list-group list-group-horizontal-xl">
+                    <li *ngFor="let card of (deck | async).clubs.upper; let i=index" class='list-group-item list-group-item-secondary'>{{ card.rank }}</li>
+                </ul>
+            </div>
+            <div class="row">
+                <ul class="col p-3 list-group list-group-horizontal-xl">
+                    <li *ngFor="let card of (deck | async).clubs.lower; let i=index" class='list-group-item list-group-item-secondary'>{{ card.rank }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
 </div>

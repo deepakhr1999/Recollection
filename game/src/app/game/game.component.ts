@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
+
+// for passing around states
+import { Observable } from 'rxjs'
+import { Store, select } from '@ngrx/store'
+
+// the state that will be passed around
+import { AppState } from '../state/state.model'
+import { Deck } from '../state/util'
 
 @Component({
   selector: 'app-game',
@@ -8,32 +16,19 @@ import { Component, OnInit } from '@angular/core';
 
 
 export class GameComponent implements OnInit {
-  name = "Deepak"
-  server = "localhost"
-  cards = [
-      [
-        {suit: 'heart', rank: 'J'},
-        {suit: 'heart', rank: 'Q'},
-        {suit: 'heart', rank: 'K'}
-      ],
-      [
-        {suit: 'diamond', rank: 'A'},
-        {suit: 'diamond', rank: '2'},
-        {suit: 'diamond', rank: '3'}
-      ],
-      [
-        {suit: 'spades', rank: 'A'},
-        {suit: 'spades', rank: '6'},
-        {suit: 'spades', rank: '7'}
-      ],
-      [
-        {suit: 'clubs', rank: '4'},
-        {suit: 'clubs', rank: '5'},
-        {suit: 'clubs', rank: '6'}
-      ],
-    ]
+  name    : Observable<string>
+  server  : Observable<string>
+  deck    : Observable<Deck>
+  score   : Observable<[number, number]>
+  selected: Observable<number>
 
-  constructor() {
+  constructor(private store: Store< {layout: AppState} >) { 
+    this.name = store.select(x => x.layout.name)
+    this.server = store.select(x => x.layout.server)
+    this.deck = store.select(x => x.layout.deck)
+    this.score  = store.select(x => x.layout.score)
+    this.selected = store.select(x => x.layout.selected)
+    // store.select(x => x.layout).subscribe(x => console.log(x))
   }
 
   ngOnInit(): void {
