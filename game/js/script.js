@@ -62,9 +62,9 @@ app.controller('connect', function($scope) {
     $scope.id = "gamma2893"
     $scope.name = "gamma"
     $scope.connect()
-    $scope.id = "delat213"
-    $scope.name = "deepak"
-    $scope.connect()
+    // $scope.id = "delat213"
+    // $scope.name = "deepak"
+    // $scope.connect()
 });
 
 app.controller('cards', ($scope)=>{
@@ -174,13 +174,12 @@ app.controller('cards', ($scope)=>{
                 // 4b. Whose turn to play? resp.turn
                     document.querySelectorAll(".turn")[0].classList.remove("turn")
                 
-                // 3c. If there is no turn info, they keep user as the one to play
+                // 4c. If there is turn info, set the user who has to play in 0.5sec
                     if(resp.turn != "")
                         setTimeout(()=>{
                             document.getElementById("id-"+resp.turn).classList.add("turn")
                         }, 500)
                 
-            
 
             // diplay set
             $scope.displaySet($scope.set)

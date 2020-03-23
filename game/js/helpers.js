@@ -51,10 +51,10 @@ const putMessage = (flag, message)=>{
     }, 6000)
 }
 
-const colorsList = ["primary-color-dark", "primary-color", "amber", "darken-4", "red", "accent-4", "grey"]
+const colorsList = ["reply-darkest", "amber", "darken-4", "red", "accent-4", "grey"]
 
-const lowerButtonColor =  [ "primary-color" ]
-const upperButtonColor =  [ "primary-color-dark" ]
+const lowerButtonColor =  [ "reply-darkest" ]
+const upperButtonColor =  [ "reply-darkest" ]
 const emptyButtonColor = [ 'grey', 'darken-4' ]
 const winsButtonColor =  [ "amber", "darken-4" ]
 const lossesButtonColor =  [ "red", "accent-4" ]

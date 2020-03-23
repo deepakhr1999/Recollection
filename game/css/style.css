@@ -1,15 +1,41 @@
+/* 
+Colors directly ripped from https://material.io/design/material-studies/reply.html#color
+    Reply Blue
+    * Light   #4a6572 
+    * Darker  #344955
+    * Darkest #232f34
+    Orange
+    * #f9aa33
+*/
+
 html {
     scroll-behavior: smooth;
 }
-*{
-    font-family: 'Trebuchet', sans-serif;
+
+body{
+    /* background-image: url('../img/cards.jpg');
+    background-attachment: fixed;
+    background-size: cover; */
+    background-color: #344955;
 }
-.btn{font: 15px 'Trebuchet';text-transform: none;}
+
+*{
+    font-family: 'Nunito', sans-serif;
+}
+.btn{
+    font-size: 1em;
+    text-transform: none;
+}
+.btn-large-font{
+    font-size: 2em;
+}
 .window{
     min-height: 100vh;
     display:flex;
     align-items: center;
     position: relative;
+    padding: 0;
+    margin: 0;
 }
 
 #connect{
@@ -29,14 +55,29 @@ html {
     text-align: center;
 }
 
-#cards{
+#cards, #all-chat{
     margin-top: 1em;
     padding: 1em;
-    min-height: calc(100vh - 100px);
-    background-color: rgba(255, 255, 255, 0.95);
+    min-height: calc(100vh - 0px);
+    /* background-color: rgba(255, 255, 255, 0.95); */
+    background-color: #232f34;
 }
 
 .turn{
-    color: white;
-    background-color: #c00;
+    /* color: white; */
+    background-color: #f9aa33;
+}
+
+.reply-orange{
+    background-color: #f9aa33;
+}
+
+.reply-light{
+    background-color: #4a6572;
+}
+.reply-darker{
+    background-color: #344955;
+}
+.reply-darkest{
+    background-color: #232f34;
 }

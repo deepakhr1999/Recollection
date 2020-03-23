@@ -8,13 +8,15 @@
     <link href="downloaded/css/bootstrap.min.css" rel="stylesheet">
     <link href="downloaded/css/mdb.min.css" rel="stylesheet">
     <link href="downloaded/fonts/Raleway.css" rel="stylesheet">
+    <link href="downloaded/fonts/Nunito.css" rel="stylesheet">
     <script src="downloaded/js/angular.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cards.css">
     <link rel="stylesheet" href="css/animate.css">
-    <title>Hello, world!</title>
+    <link rel="icon" href="img/favicon.jpg" type="image/icon type">
+    <title>LITERATURE</title>
   </head>
-  <body ng-app="myApp" style="background-image: url('img/cards.jpg'); background-attachment: fixed; background-size: cover;">
+  <body ng-app="myApp">
     <div class="window" >
       <div ng-controller="connect" class="container col-4 animated bounceInUp slow" id='connect'>
         <legend class="danger-color-dark">Credentials</legend>
@@ -40,135 +42,151 @@
       </div>
     </div>
     <div class="window">
-      
-    <div class="container align-self-start" ng-controller="cards" id="cards">
-      <!-- <style>#alert{display: none;}</style> -->
-        <div class="row mb-3 align-items-center">
-          <div class="col turn" id="id-{{id}}">
+      <!-- Game -->
+      <div class="col-8 container align-self-center" ng-controller="cards" id="cards">          
+          <!-- Players info -->
+          <div class="row mb-3 align-items-center">
             
-                <!-- <div class="flex-grow">
-                  
-                </div> -->
-                <div class="row align-items-center">
-                  <div class="p-2 flex-grow-1 ">
-                    <div class="h3 pt-3 mb-0" >{{ name }}</div>
-                    <p>@{{ id }}</p>
+            <!-- Username -->
+            <div class="col turn text-white" id="id-{{id}}" ng-click="ping()">
+              <div class="row align-items-center">
+                <div class="p-2 flex-grow-1">
+                  <div class="h3 pt-3 mb-0" >{{ name }}</div>
+                  <p>@{{ id }}</p>
+                </div>
+                <div class="p-3">
+                  <div class="h2">
+                    <sup>{{ winsCount }}</sup>
+                    &frasl;
+                    <sub>{{ lossesCount }}</sub>
                   </div>
-                  <div class="p-3">
-                    <div class="h2">
-                      <sup>{{ winsCount }}</sup>
-                      &frasl;
-                      <sub>{{ lossesCount }}</sub>
+                </div>
+              </div>
+            </div>
+
+            <!-- Other players -->
+            <div class="col-2 text-white" id="id-{{ otherPlayers[0].id }}">
+              <div class="h5 py-3 mb-0 animate">@{{ otherPlayers[0].id }}</div>
+            </div>
+            <div class="col-2 text-white" id="id-{{ otherPlayers[1].id }}">
+              <div class="h5 py-3 mb-0 animate">@{{ otherPlayers[1].id }}</div>
+            </div>
+            <div class="col-2 text-white" id="id-{{ otherPlayers[2].id }}">
+              <div class="h5 py-3 mb-0 animate">@{{ otherPlayers[2].id }}</div>
+            </div>
+
+            <!-- <button class="btn btn-primary mb-0" ng-click="ping()">Refresh</button> -->
+          </div>
+          
+          <!-- Form for playing -->
+          <div class="row justify-content-center py-3">
+              <div class="col">
+                  <div class="row justify-content-center">
+                    <!-- number -->
+                    <div class="col-5 mb-3">
+                          <div class="input-group">
+                            <select class="browser-default custom-select" ng-model='number'>
+                              <option value="A">A</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                              <option value="J">J</option>
+                              <option value="Q">Q</option>
+                              <option value="K">K</option>
+                            </select>
+                            <div class="input-group-append">
+                              <label class="input-group-text">Number</label>
+                            </div>
+                          </div>
+                    </div>
+                    <!-- suit -->
+                    <div class="col-5 mb-3">
+                            <div class="input-group">
+                              <select class="browser-default custom-select" ng-model='suit'>
+                                <option value="hearts">hearts</option>
+                                <option value="spades">spades</option>
+                                <option value="diamonds">diamonds</option>
+                                <option value="clubs">clubs</option>
+                              </select>
+                              <div class="input-group-append">
+                                <label class="input-group-text">Suit</label>
+                              </div>
+                            </div>
                     </div>
                   </div>
-                </div>
-          </div>
-          <div class="col-2" id="id-{{ otherPlayers[0].id }}">
-            <div class="h5 pt-3 mb-0 animate">@{{ otherPlayers[0].id }}</div>
-          </div>
-          <div class="col-2" id="id-{{ otherPlayers[1].id }}">
-            <div class="h5 pt-3 mb-0 animate">@{{ otherPlayers[1].id }}</div>
-          </div>
-          <div class="col-2" id="id-{{ otherPlayers[2].id }}">
-            <div class="h5 pt-3 mb-0 animate">@{{ otherPlayers[2].id }}</div>
-          </div>
-          <button class="btn btn-primary mb-0" ng-click="ping()">Refresh</button>
-        </div>
-        
-        <div class="row">
-            <div class="col-6 row">
-                <!-- number -->
-                <div class="col">
-                      <div class="input-group mb-3">
-                        <select class="browser-default custom-select" ng-model='number'>
-                          <option value="A">A</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                          <option value="6">6</option>
-                          <option value="7">7</option>
-                          <option value="8">8</option>
-                          <option value="9">9</option>
-                          <option value="10">10</option>
-                          <option value="J">J</option>
-                          <option value="Q">Q</option>
-                          <option value="K">K</option>
-                        </select>
-                        <div class="input-group-append">
-                          <label class="input-group-text">Number</label>
-                        </div>
-                      </div>
-                </div>
-                <!-- suit -->
-                <div class="col">
-                        <div class="input-group mb-3">
-                          <select class="browser-default custom-select" ng-model='suit'>
-                            <option value="hearts">hearts</option>
-                            <option value="spades">spades</option>
-                            <option value="diamonds">diamonds</option>
-                            <option value="clubs">clubs</option>
+                  <div class="row justify-content-center">
+                    <!-- opponent -->
+                    <div class="col-10">
+                        <div class="input-group">
+                          <select class="browser-default custom-select" ng-model='askedOpponent'>
+                            <option value="{{ otherPlayers[1].id }}"> {{otherPlayers[1].name}} @{{otherPlayers[1].id}}</option>
+                            <option value="{{ otherPlayers[2].id }}"> {{otherPlayers[2].name}} @{{otherPlayers[2].id}}</option>
                           </select>
                           <div class="input-group-append">
-                            <label class="input-group-text">Suit</label>
+                            <label class="input-group-text">Opponent</label>
                           </div>
                         </div>
+                    </div>                    
+                  </div>
+              </div>
+
+              <div class="col">
+                <div class="row align-items-stretch justify-content-center" style="height: 100%;">
+                  <button ng-click="call()" class="btn btn-large-font col-5 reply-orange text-white">Call</button>
+                  <button ng-click="play()" class="btn btn-large-font col-5  reply-orange text-white">Ask {{number}} {{ suit }}</button>
                 </div>
-                <!-- opponent -->
-                <div class="col-8">
-                    <div class="input-group mb-3">
-                      <select class="browser-default custom-select" ng-model='askedOpponent'>
-                        <option value="{{ otherPlayers[1].id }}"> {{otherPlayers[1].name}} @{{otherPlayers[1].id}}</option>
-                        <option value="{{ otherPlayers[2].id }}"> {{otherPlayers[2].name}} @{{otherPlayers[2].id}}</option>
-                      </select>
-                      <div class="input-group-append">
-                        <label class="input-group-text">Opponent</label>
-                      </div>
-                    </div>
-                </div>
-            </div>
-            <button ng-click="call()" class="btn btn-dark col-3">Call</button>
-            <button ng-click="play()" class="col-3 btn btn-primary">Ask {{number}} {{ suit }}</button>
-        </div>
-      
-        <hr>
-      
-      <div class="row">
-        <div class="col" style="min-height: 370px;">
-          <!-- Menu -->
-          <section class="row justify-content-center">
-            <button set_number="1" ng-click="displaySet(1)" style="border-radius: 0;" class="btn primary-color text-white m-0 col-2">Hearts Upper</button>
-            <button set_number="3" ng-click="displaySet(3)" style="border-radius: 0;" class="btn primary-color text-white m-0 col-2">Spades Upper</button>
-            <button set_number="5" ng-click="displaySet(5)" style="border-radius: 0;" class="btn primary-color text-white m-0 col-2">Clubs Upper</button>
-            <button set_number="7" ng-click="displaySet(7)" style="border-radius: 0;" class="btn primary-color text-white m-0 col-2">Diamonds Upper</button>
-            <div class="w-100"></div>
-            <button set_number="0" ng-click="displaySet(0)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Hearts Lower</button>
-            <button set_number="2" ng-click="displaySet(2)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Spades Lower</button>
-            <button set_number="4" ng-click="displaySet(4)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Clubs Lower</button>
-            <button set_number="6" ng-click="displaySet(6)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Diamonds Lower</button>
-          </section>
-          <!-- Cards -->
-          <section class="cards container"></section>      
-          <section class="cards container"></section>
-
-          <section class="cards container"></section>
-          <section class="cards container"></section>
-
-          <section class="cards container"></section>      
-          <section class="cards container"></section>
-
-          <section class="cards container"></section>
-          <section class="cards container"></section>
-        </div>
+              </div>
+          </div>
         
-        <div class="w-100 alert alert-{{ messageType }}" id="alert" onclick="this.style.display='none'" style="display:none">
-          {{ message }}
-        </div>
-        <!-- Reponse form -->
+          <hr>
         
+        <!-- Cards on display -->
+        <div class="row">
+          <div class="col" style="min-height: 370px;">
+            <!-- Menu -->
+            <section class="row justify-content-center">
+              <button set_number="1" ng-click="displaySet(1)" style="border-radius: 0;" class="btn reply-darkest text-white m-0 col-2">Hearts Upper</button>
+              <button set_number="3" ng-click="displaySet(3)" style="border-radius: 0;" class="btn reply-darkest text-white m-0 col-2">Spades Upper</button>
+              <button set_number="5" ng-click="displaySet(5)" style="border-radius: 0;" class="btn reply-darkest text-white m-0 col-2">Clubs Upper</button>
+              <button set_number="7" ng-click="displaySet(7)" style="border-radius: 0;" class="btn reply-darkest text-white m-0 col-2">Diamonds Upper</button>
+              <div class="w-100"></div>
+              <button set_number="0" ng-click="displaySet(0)" style="border-radius: 0;" class="btn reply-darkest text-white m-0 col-2">Hearts Lower</button>
+              <button set_number="2" ng-click="displaySet(2)" style="border-radius: 0;" class="btn reply-darkest text-white m-0 col-2">Spades Lower</button>
+              <button set_number="4" ng-click="displaySet(4)" style="border-radius: 0;" class="btn reply-darkest text-white m-0 col-2">Clubs Lower</button>
+              <button set_number="6" ng-click="displaySet(6)" style="border-radius: 0;" class="btn reply-darkest text-white m-0 col-2">Diamonds Lower</button>
+            </section>
+            <!-- Cards -->
+            <section class="cards container"></section>      
+            <section class="cards container"></section>
+
+            <section class="cards container"></section>
+            <section class="cards container"></section>
+
+            <section class="cards container"></section>      
+            <section class="cards container"></section>
+
+            <section class="cards container"></section>
+            <section class="cards container"></section>
+          </div>
+          
+          <div class="w-100 alert alert-{{ messageType }}" id="alert" onclick="this.style.display='none'" style="display:none">
+            {{ message }}
+          </div>
+          <!-- Reponse form -->
+          
+        </div>
       </div>
-    </div>
-    
+
+      <!-- All chat -->
+      <div class="col-4 container align-self-center" id="all-chat">
+        <h1>All chat</h1>
+      </div>
     </div>
     <script type="text/javascript" src="js/script.js"></script>
     <script type="text/javascript" src="js/helpers.js"></script>
