@@ -9,6 +9,6 @@
             <input mdbInput type="text" name="text" [(ngModel)]="username" class="form-control">
             <label>Username</label>
         </div>
-        <a href='/game' type="button" mdbBtn color="danger" mdbWavesEffect>Danger</a>
+        <button href='/game' (click)="connectToGame()" type="button" mdbBtn color="danger" mdbWavesEffect>Danger</button>
       </form>      
 

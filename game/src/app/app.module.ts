@@ -14,14 +14,20 @@ import { GameComponent } from './game/game.component'
 
 import { StoreModule, ActionReducerMap } from '@ngrx/store'
 import { reducer } from './state/state.reducer'
-import { AppState } from './state/state.model'
+import { AppState } from './state/state.model';
+import { CredentialsComponent } from './credentials/credentials.component';
+import { DeckComponent } from './deck/deck.component';
+import { StatsComponent } from './stats/stats.component'
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    GameComponent
+    GameComponent,
+    CredentialsComponent,
+    DeckComponent,
+    StatsComponent
   ],
   imports: [
     BrowserModule,

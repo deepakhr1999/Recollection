@@ -22,3 +22,22 @@ export class Card {
         public rank:string
     ){ }
 }
+
+// Aggregates name and server
+export class Creds {
+    constructor(
+        public name: string,
+        public server: string,
+        public ally: string, 
+        public opponents: [string, string]
+    ){}
+}
+
+export class GameState {
+    constructor(
+        public deck: Deck,
+        public score: [number, number], // my wins vs opponent's wins
+        public selected: number,
+        public turn: string
+    ){}
+}

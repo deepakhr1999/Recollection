@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+    <link rel="stylesheet" href="downloaded/css/all.css">
+    <link href="downloaded/css/bootstrap.min.css" rel="stylesheet">
+    <link href="downloaded/css/mdb.min.css" rel="stylesheet">
+    <link href="downloaded/fonts/Raleway.css" rel="stylesheet">
+    <script src="downloaded/js/angular.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <title>Hello, world!</title>
+  </head>
+  <body ng-app="myApp" style="background-image: url('img/cards.jpg'); background-attachment: fixed; background-size: cover;">
+    <div class="window" >
+      <div ng-controller="connect" class="container col-4 animated bounceInUp slow" id='connect'>
+        <legend class="danger-color-dark">Credentials</legend>
+        <div class="md-form">
+          <input type="text" value="h" class="form-control" ng-model="server">
+          <label>Server</label>
+        </div>
+        <div class="md-form">
+          <input type="text" value="h" class="form-control" ng-model="password">
+          <label>Password</label>
+        </div>
+        <div class="md-form">
+          <input type="text" value="h" class="form-control" ng-model="id">
+          <label>Id</label>
+        </div>
+        <div class="md-form">
+          <input type="text" value="h" class="form-control" ng-model="name">
+          <label>Name</label>
+        </div>
+        <div class="text-center">
+           <a class="btn danger-color-dark white-text col-6 mx-auto" ng-click="connect()" href="#cards">Connect</a>
+        </div>
+      </div>
+    </div>
+    <div class="window">
+      
+    <div class="container align-self-start" ng-controller="cards" id="cards">
+      <!-- <style>#alert{display: none;}</style> -->
+        <div class="row mb-3 align-items-center">
+          <div class="col turn" id="id-{{id}}">
+            <div class="h3 pt-3 mb-0" >{{ name }}</div>
+            <p>@{{ id }}</p>
+          </div>
+          <div class="col-2" id="id-{{ otherPlayers[0].id }}">
+            <div class="h5 pt-3 mb-0 animate">{{otherPlayers[0].name}}</div><p>@{{ otherPlayers[0].id }}</p>
+          </div>
+          <div class="col-2" id="id-{{ otherPlayers[1].id }}">
+            <div class="h5 pt-3 mb-0 animate">{{otherPlayers[1].name}}</div><p>@{{ otherPlayers[1].id }}</p>
+          </div>
+          <div class="col-2" id="id-{{ otherPlayers[2].id }}">
+            <div class="h5 pt-3 mb-0 animate">{{otherPlayers[2].name}}</div><p>@{{ otherPlayers[2].id }}</p>
+          </div>
+          <button class="btn btn-primary mb-0" ng-click="ping()">Refresh</button>
+        </div>
+        
+        <div class="row">
+            <div class="col-6 row">
+                <!-- number -->
+                <div class="col">
+                      <div class="input-group mb-3">
+                        <select class="browser-default custom-select" ng-model='number'>
+                          <option value="A">A</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                          <option value="J">J</option>
+                          <option value="Q">Q</option>
+                          <option value="K">K</option>
+                        </select>
+                        <div class="input-group-append">
+                          <label class="input-group-text">Number</label>
+                        </div>
+                      </div>
+                </div>
+                <!-- suit -->
+                <div class="col">
+                        <div class="input-group mb-3">
+                          <select class="browser-default custom-select" ng-model='suit'>
+                            <option value="hearts">hearts</option>
+                            <option value="spades">spades</option>
+                            <option value="diamonds">diamonds</option>
+                            <option value="clubs">clubs</option>
+                          </select>
+                          <div class="input-group-append">
+                            <label class="input-group-text">Suit</label>
+                          </div>
+                        </div>
+                </div>
+                <!-- opponent -->
+                <div class="col-8">
+                    <div class="input-group mb-3">
+                      <select class="browser-default custom-select" ng-model='askedOpponent'>
+                        <option value="{{ otherPlayers[1].id }}"> {{otherPlayers[1].name}} @{{otherPlayers[1].id}}</option>
+                        <option value="{{ otherPlayers[2].id }}"> {{otherPlayers[2].name}} @{{otherPlayers[2].id}}</option>
+                      </select>
+                      <div class="input-group-append">
+                        <label class="input-group-text">Opponent</label>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <button ng-click="call()" class="btn btn-dark col-3">Call</button>
+            <button ng-click="play()" class="col-3 btn btn-primary">Ask {{number}} {{ suit }}</button>
+        </div>
+      
+        <hr>
+      
+      <div class="row">
+        <div class="col" style="min-height: 370px;">
+          <!-- Menu -->
+          <section class="row justify-content-center">
+            <button ng-click="displaySet(1)" style="border-radius: 0;" class="btn btn-primary m-0 col-2">Hearts Upper</button>
+            <button ng-click="displaySet(3)" style="border-radius: 0;" class="btn btn-primary m-0 col-2">Spades Upper</button>
+            <button ng-click="displaySet(5)" style="border-radius: 0;" class="btn btn-primary m-0 col-2">Clubs Upper</button>
+            <button ng-click="displaySet(7)" style="border-radius: 0;" class="btn btn-primary m-0 col-2">Diamonds Upper</button>
+            <div class="w-100"></div>
+            <button ng-click="displaySet(0)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Hearts Lower</button>
+            <button ng-click="displaySet(2)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Spades Lower</button>
+            <button ng-click="displaySet(4)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Clubs Lower</button>
+            <button ng-click="displaySet(6)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Diamonds Lower</button>
+          </section>
+          <!-- Cards -->
+          <section class="cards container"></section>      
+          <section class="cards container"></section>
+
+          <section class="cards container"></section>
+          <section class="cards container"></section>
+
+          <section class="cards container"></section>      
+          <section class="cards container"></section>
+
+          <section class="cards container"></section>
+          <section class="cards container"></section>
+        </div>
+        
+        <div class="w-100 alert alert-{{ messageType }}" id="alert" onclick="this.style.display='none'" style="display:none">
+          {{ message }}
+        </div>
+        <!-- Reponse form -->
+        
+      </div>
+    </div>
+    
+    </div>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/helpers.js"></script>
+    <!-- Optional JavaScript -->
+    <script type="text/javascript" src="downloaded/js/jquery.min.js"></script>
+    <script type="text/javascript" src="downloaded/js/popper.min.js"></script>
+    <script type="text/javascript" src="downloaded/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="downloaded/js/mdb.min.js"></script>
+  </body>
+</html>

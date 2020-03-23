@@ -1,11 +1,8 @@
-import { Deck, Card, Suit } from './util'
+import { Deck, Card, Suit, Creds, GameState } from './state.util'
 
 export interface AppState {
-    readonly name: string
-    readonly server: string
-    readonly deck: Deck 
-    readonly score: [number, number] // my wins vs opponent's wins
-    readonly selected: number
+    readonly creds: Creds
+    readonly gameState: GameState
 }
 const hearts = new Suit(
     [
@@ -25,9 +22,16 @@ const diamonds = hearts
 const clubs = hearts
 
 export const defaultState: AppState = {
-    name : "Deepak",
-    server : "localhost",
-    deck: new Deck(hearts, diamonds, spades, clubs),
-    score: [0, 0],
-    selected: 1
+    creds : new Creds(
+                "Deepak",
+                "localhost",
+                "Harvey Spectre",
+                ["Mike Ross", "Rachel Zane"]
+            ),
+    gameState : new GameState(
+        new Deck(hearts, diamonds, spades, clubs),
+        [0, 0],
+        0,
+        "Deepak"
+    )
 }

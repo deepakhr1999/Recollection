@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'Trebuchet';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Trebuchet'), local('Trebuchet-Regular'), url(Trebuchet\ MS.ttf) format('truetype');
+}

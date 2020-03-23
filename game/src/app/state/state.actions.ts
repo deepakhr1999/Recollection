@@ -3,6 +3,7 @@ import { Action } from '@ngrx/store'
 
 // client state implements this interface
 import { AppState } from './state.model'
+import { Creds } from './state.util'
 
 export const CONNECT = 'ConnectAction'
 export const PING = 'Ping'
@@ -17,7 +18,7 @@ export const END = "End"
 export class ConnectAction implements Action {
     readonly type = CONNECT
 
-    constructor(public payload: AppState) {}
+    constructor(public payload: Creds) {}
 }
 
 // user pings the server to seek any changes
