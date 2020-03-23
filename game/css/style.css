@@ -29,6 +29,7 @@ body{
 .btn-large-font{
     font-size: 2em;
 }
+
 .window{
     min-height: 100vh;
     display:flex;
@@ -36,6 +37,12 @@ body{
     position: relative;
     padding: 0;
     margin: 0;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #connect{
@@ -56,28 +63,73 @@ body{
 }
 
 #cards, #all-chat{
-    margin-top: 1em;
-    padding: 1em;
-    min-height: calc(100vh - 0px);
-    /* background-color: rgba(255, 255, 255, 0.95); */
-    background-color: #232f34;
+    padding: 0;
+    height: calc(100vh - 0px);
 }
 
 .turn{
-    /* color: white; */
+    color: #fff;
     background-color: #f9aa33;
 }
 
+.player-border{
+    border: 1px solid #73858e;
+    border-collapse: collapse;
+}
 .reply-orange{
+    color: #fff ;
     background-color: #f9aa33;
 }
 
 .reply-light{
+    color: #fff ;
     background-color: #4a6572;
 }
 .reply-darker{
+    color: #fff ;
     background-color: #344955;
 }
 .reply-darkest{
+    color: #73858e ;
     background-color: #232f34;
+}
+
+.buttons .btn:hover{
+    color: #344955;
+}
+
+#all-chat .footer{
+    height: 4em;
+    font-size: 1.5em;
+}
+
+.message{
+    margin: 0;
+    display: flex;
+    align-items: stretch;
+}
+
+.message .message-sender{
+    color: #f9aa33;
+    font-size: 1em;
+    font-weight: 600;
+    width: 100px;
+    padding: 1em;
+    border-right: 1px solid #232f34;
+}
+
+.message .message-text{
+    color: white;
+    font-size: 1em;
+    padding: 1em;
+    flex-grow: 1;
+}
+
+.message .message-console{
+    text-align: center;
+    color: #f9aa33;
+    font-size: 1em;
+    font-weight: 600;
+    padding: 1em;
+    flex-grow: 1;
 }
