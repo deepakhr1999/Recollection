@@ -32,7 +32,7 @@
         </div>
         <div class="md-form">
           <input type="text" value="h" class="form-control" ng-model="name">
-          <label>Name</label>
+          <label>Secret</label>
         </div>
         <div class="text-center">
            <a class="btn danger-color-dark white-text col-6 mx-auto" ng-click="connect()" href="#cards">Connect</a>
@@ -64,13 +64,13 @@
                 </div>
           </div>
           <div class="col-2" id="id-{{ otherPlayers[0].id }}">
-            <div class="h5 pt-3 mb-0 animate">{{otherPlayers[0].name}}</div><p>@{{ otherPlayers[0].id }}</p>
+            <div class="h5 pt-3 mb-0 animate">@{{ otherPlayers[0].id }}</div>
           </div>
           <div class="col-2" id="id-{{ otherPlayers[1].id }}">
-            <div class="h5 pt-3 mb-0 animate">{{otherPlayers[1].name}}</div><p>@{{ otherPlayers[1].id }}</p>
+            <div class="h5 pt-3 mb-0 animate">@{{ otherPlayers[1].id }}</div>
           </div>
           <div class="col-2" id="id-{{ otherPlayers[2].id }}">
-            <div class="h5 pt-3 mb-0 animate">{{otherPlayers[2].name}}</div><p>@{{ otherPlayers[2].id }}</p>
+            <div class="h5 pt-3 mb-0 animate">@{{ otherPlayers[2].id }}</div>
           </div>
           <button class="btn btn-primary mb-0" ng-click="ping()">Refresh</button>
         </div>
@@ -137,15 +137,15 @@
         <div class="col" style="min-height: 370px;">
           <!-- Menu -->
           <section class="row justify-content-center">
-            <button ng-click="displaySet(1)" style="border-radius: 0;" class="btn btn-primary m-0 col-2">Hearts Upper</button>
-            <button ng-click="displaySet(3)" style="border-radius: 0;" class="btn btn-primary m-0 col-2">Spades Upper</button>
-            <button ng-click="displaySet(5)" style="border-radius: 0;" class="btn btn-primary m-0 col-2">Clubs Upper</button>
-            <button ng-click="displaySet(7)" style="border-radius: 0;" class="btn btn-primary m-0 col-2">Diamonds Upper</button>
+            <button set_number="1" ng-click="displaySet(1)" style="border-radius: 0;" class="btn primary-color text-white m-0 col-2">Hearts Upper</button>
+            <button set_number="3" ng-click="displaySet(3)" style="border-radius: 0;" class="btn primary-color text-white m-0 col-2">Spades Upper</button>
+            <button set_number="5" ng-click="displaySet(5)" style="border-radius: 0;" class="btn primary-color text-white m-0 col-2">Clubs Upper</button>
+            <button set_number="7" ng-click="displaySet(7)" style="border-radius: 0;" class="btn primary-color text-white m-0 col-2">Diamonds Upper</button>
             <div class="w-100"></div>
-            <button ng-click="displaySet(0)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Hearts Lower</button>
-            <button ng-click="displaySet(2)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Spades Lower</button>
-            <button ng-click="displaySet(4)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Clubs Lower</button>
-            <button ng-click="displaySet(6)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Diamonds Lower</button>
+            <button set_number="0" ng-click="displaySet(0)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Hearts Lower</button>
+            <button set_number="2" ng-click="displaySet(2)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Spades Lower</button>
+            <button set_number="4" ng-click="displaySet(4)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Clubs Lower</button>
+            <button set_number="6" ng-click="displaySet(6)" style="border-radius: 0;" class="btn primary-color-dark text-white m-0 col-2">Diamonds Lower</button>
           </section>
           <!-- Cards -->
           <section class="cards container"></section>      

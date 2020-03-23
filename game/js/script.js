@@ -122,38 +122,66 @@ app.controller('cards', ($scope)=>{
 
             console.log("display is"+ M.style.display+" wagamama")
             state.state = resp.state
-
-            // set cards
             sections = document.querySelectorAll(".cards")
-            $scope.cards = resp.data.cards
-            $scope.cards.forEach((set, i)=>{
-                x = ""
-                set.forEach(card =>{
-                    x = x + getCard(card.num, card.suit)
-                })
-                sections[i].innerHTML = x
-            })
-            state.wins = resp.wins
-            state.losses = resp.losses
-            //if the set is under wins then
-            state.wins.forEach(index => sections[index].innerHTML = getCard('W', "wins"))
-            state.losses.forEach(index => sections[index].innerHTML = getCard('L', "losses"))
             
-            $scope.winsCount = state.wins.length
-            $scope.lossesCount = state.losses.length
-            // display player names
-            $scope.setPlayer(1, resp.others[resp.mate])
-            $scope.setPlayer(2, resp.others[resp.opp[0]])
-            $scope.setPlayer(3, resp.others[resp.opp[1]])
+            /** STEPS TO BE FOLLOWED WHILE SETTING CARDS
+             * 1. Inserting cards into the respective sections
+             * 2. Dealing with sets won and lost by the user  
+             * 3. Dealing with sets for which user does not have cards
+             * 4. Displaying info about players
+             */
+            
+            // 1. Inserting cards into respective sections
+                $scope.cards = resp.data.cards
+                $scope.cards.forEach((set, i)=>{
+                    x = ""
+                    set.forEach(card =>{
+                        x = x + getCard(card.num, card.suit)
+                    })
 
-            //display whose turn this is *resp.turn
-            document.querySelectorAll(".turn")[0].classList.remove("turn")
+                    sections[i].innerHTML = x
+                })
+
+            // 2. Dealing with sets won and lost by the user
+
+                // 2a. setting the win and loss cards inside those sections.
+                    state.wins = resp.wins
+                    state.losses = resp.losses
+                    state.wins.forEach(index => sections[index].innerHTML = getCard('W', "wins"))
+                    state.losses.forEach(index => sections[index].innerHTML = getCard('L', "losses"))
+                
+                // 2b. setting the scores in the scope
+                    $scope.winsCount = state.wins.length
+                    $scope.lossesCount = state.losses.length
             
-            
-            if(resp.turn != "")
-                setTimeout(function(){document.getElementById("id-"+resp.turn).classList.add("turn")}, 500)
+                // 2c. setting color for the buttons as win or lose.
+                    state.wins.forEach(set_number => changeButtonColor(set_number, winsButtonColor))
+                    state.losses.forEach(set_number => changeButtonColor(set_number, lossesButtonColor))
+
+            // 3. Dealing with sets for which user does not have cards
+                // loop over all sets where index not in wins or losses
+                $scope.cards.forEach( (set, index) => {
+                    if(set.length == 0 & !state.wins.includes(index) & !state.losses.includes(index))
+                        changeButtonColor(index, emptyButtonColor)
+                })
+
+            // 4. Displaying info about players
+                // 4a. Names
+                    $scope.setPlayer(1, resp.others[resp.mate])
+                    $scope.setPlayer(2, resp.others[resp.opp[0]])
+                    $scope.setPlayer(3, resp.others[resp.opp[1]])
+
+                // 4b. Whose turn to play? resp.turn
+                    document.querySelectorAll(".turn")[0].classList.remove("turn")
+                
+                // 3c. If there is no turn info, they keep user as the one to play
+                    if(resp.turn != "")
+                        setTimeout(()=>{
+                            document.getElementById("id-"+resp.turn).classList.add("turn")
+                        }, 500)
                 
             
+
             // diplay set
             $scope.displaySet($scope.set)
             $scope.$digest();

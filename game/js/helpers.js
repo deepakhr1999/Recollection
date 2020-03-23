@@ -50,3 +50,17 @@ const putMessage = (flag, message)=>{
         div.removeChild(L[n])
     }, 6000)
 }
+
+const colorsList = ["primary-color-dark", "primary-color", "amber", "darken-4", "red", "accent-4", "grey"]
+
+const lowerButtonColor =  [ "primary-color" ]
+const upperButtonColor =  [ "primary-color-dark" ]
+const emptyButtonColor = [ 'grey', 'darken-4' ]
+const winsButtonColor =  [ "amber", "darken-4" ]
+const lossesButtonColor =  [ "red", "accent-4" ]
+
+const changeButtonColor = (set_number, newClassName) =>{
+    section = document.querySelector('[set_number = "'+set_number+'"]')
+    section.classList.remove(...colorsList)
+    section.classList.add(...newClassName)
+}
