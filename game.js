@@ -7,7 +7,7 @@ class Game{
         this.state = 0
         this.broadcast = "Game init"
         this.id = "hellothere"
-        this.wins = [[], []]
+        this.wins = [[], []] // contains the sets won by team 0 and team 1
         this.turn = ""
     }
 
@@ -37,23 +37,24 @@ class Game{
     }
 
     ping(params){
-        let temp = this.isInGame(params.id)
-        // console.log(temp)
+        let info = this.isInGame(params.id)
         let res = {
             status: "failure", 
             message: 'You have not connected to the game'
         }
-        if(!temp.found)
+        if(!info.found)
             return res
         else{
             res = {
                 status: 'success',
                 state: this.state,
                 message: this.broadcast,
-                data: this.players[temp.index],
+                data: this.players[info.index],
                 others: [],
-                mate : temp.mate,
-                opp : temp.opp,
+                mate : info.mate,
+                opp : info.opp,
+                wins: this.wins[info.team],
+                losses: this.wins[ 1 - info.team ],
                 turn: this.turn
             }
             this.players.forEach(player => res.others.push({name:player.name, id: player.id}))

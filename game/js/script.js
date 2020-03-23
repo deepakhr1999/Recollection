@@ -9,12 +9,15 @@ var req = {
     }
 }
 
+// value of the state shared with all the scopes
 var state = {
     id: "",
     name: "",
     state: 0,
     cards: [],
-    server: "http://10.196.8.226:3000"
+    server: "http://localhost:3000",
+    wins: [],
+    losses: []
 }
 
 M = document.getElementById("alert")
@@ -76,6 +79,8 @@ app.controller('cards', ($scope)=>{
         {name: "playerName3", id: "playerId3"},
         {name: "playerName4", id: "playerId4"},
     ]
+    $scope.winsCount = 0
+    $scope.lossesCount = 0
 
     $scope.displaySet = (index)=>{
         console.log('called with', index)
@@ -114,8 +119,10 @@ app.controller('cards', ($scope)=>{
             console.log("State change detected")
             $scope.messageType = "success"
             M.style.display = ""
+
             console.log("display is"+ M.style.display+" wagamama")
             state.state = resp.state
+
             // set cards
             sections = document.querySelectorAll(".cards")
             $scope.cards = resp.data.cards
@@ -126,7 +133,14 @@ app.controller('cards', ($scope)=>{
                 })
                 sections[i].innerHTML = x
             })
-
+            state.wins = resp.wins
+            state.losses = resp.losses
+            //if the set is under wins then
+            state.wins.forEach(index => sections[index].innerHTML = getCard('W', "wins"))
+            state.losses.forEach(index => sections[index].innerHTML = getCard('L', "losses"))
+            
+            $scope.winsCount = state.wins.length
+            $scope.lossesCount = state.losses.length
             // display player names
             $scope.setPlayer(1, resp.others[resp.mate])
             $scope.setPlayer(2, resp.others[resp.opp[0]])

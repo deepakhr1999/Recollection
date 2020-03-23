@@ -45,8 +45,23 @@
       <!-- <style>#alert{display: none;}</style> -->
         <div class="row mb-3 align-items-center">
           <div class="col turn" id="id-{{id}}">
-            <div class="h3 pt-3 mb-0" >{{ name }}</div>
-            <p>@{{ id }}</p>
+            
+                <!-- <div class="flex-grow">
+                  
+                </div> -->
+                <div class="row align-items-center">
+                  <div class="p-2 flex-grow-1 ">
+                    <div class="h3 pt-3 mb-0" >{{ name }}</div>
+                    <p>@{{ id }}</p>
+                  </div>
+                  <div class="p-3">
+                    <div class="h2">
+                      <sup>{{ winsCount }}</sup>
+                      &frasl;
+                      <sub>{{ lossesCount }}</sub>
+                    </div>
+                  </div>
+                </div>
           </div>
           <div class="col-2" id="id-{{ otherPlayers[0].id }}">
             <div class="h5 pt-3 mb-0 animate">{{otherPlayers[0].name}}</div><p>@{{ otherPlayers[0].id }}</p>
