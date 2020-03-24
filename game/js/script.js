@@ -1,11 +1,11 @@
 var app = angular.module("myApp", []);
 
 var req = {
-    password : "wagamama",
+    password : GLOBALS.PASSWORD,
     command : "ping",
     params:{
-        id: "deepak",
-        name: "deepak",
+        id: GLOBALS.NAME,
+        name: GLOBALS.SECRET,
         state: 0,
         message: "",
     }
@@ -13,8 +13,8 @@ var req = {
 
 // value of the state shared with all the scopes
 var state = {
-    id: "",
-    name: "",
+    id: GLOBALS.NAME,
+    name: GLOBALS.SECRET,
     state: 0,
     cards: [],
     server: "http://localhost:3000",
@@ -51,21 +51,9 @@ app.controller('connect', function($scope) {
         .catch(err=>console.log(err))
     }
     
-    $scope.id = "delat213"
-    $scope.name = "deepak"
+    $scope.id = GLOBALS.NAME
+    $scope.name = GLOBALS.SECRET
     $scope.connect()
-    $scope.id = "alpha123"
-    $scope.name = "alpha"
-    $scope.connect()
-    $scope.id = "beta38927"
-    $scope.name = "beta"
-    $scope.connect()
-    $scope.id = "gamma2893"
-    $scope.name = "gamma"
-    $scope.connect()
-    // $scope.id = "delat213"
-    // $scope.name = "deepak"
-    // $scope.connect()
 });
 
 app.controller('cards', ($scope)=>{
