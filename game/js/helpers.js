@@ -38,17 +38,34 @@ const setBroadcast = (message) => {
 }
 
 
-const putMessage = (flag, message)=>{
-    div = document.getElementById("messages")
+const putMessage = (message)=>{
+    // flag is either console or chat
+    div = document.getElementById("chatbox")
     node = document.createElement("div")
-    node.innerHTML = message
-    classes = "w-100 alert alert-"+flag+" animated bounceInUp slow"
-    node.classList.add(...classes.split(" "))
+    node.classList.add('message')
+    if (message.sender != "console"){
+    /*
+        <div class="message">
+            <span>Deepak</span> Hello world 
+        </div>
+    */
+        span = document.createElement('span')
+        span.appendChild( document.createTextNode(message.sender) )
+        node.appendChild(span)
+        node.appendChild(document.createTextNode(message.value))        
+    }else{
+     /*
+        <div class="message">
+            <div class="message-console">Call by someone failed</div>
+        </div>
+    */
+        messageConsole = document.createElement("div")
+        messageConsole.classList.add("message-console")
+        messageConsole.appendChild( document.createTextNode(message.value) )
+        node.appendChild(messageConsole)
+    }
     div.appendChild(node)
-    setTimeout(function(){
-        L = div.childNodes;n = L.length - 1;
-        div.removeChild(L[n])
-    }, 6000)
+    div.scrollTop = div.scrollHeight;
 }
 
 const colorsList = ["reply-darkest", "amber", "darken-4", "red", "accent-4", "grey"]

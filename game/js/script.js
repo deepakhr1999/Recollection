@@ -5,7 +5,9 @@ var req = {
     command : "ping",
     params:{
         id: "deepak",
-        name: "deepak"
+        name: "deepak",
+        state: 0,
+        message: "",
     }
 }
 
@@ -20,7 +22,6 @@ var state = {
     losses: []
 }
 
-M = document.getElementById("alert")
 
 app.controller('connect', function($scope) {
     $scope.print = console.log
@@ -71,8 +72,7 @@ app.controller('cards', ($scope)=>{
     $scope.cards = []
     $scope.name = "playerName1"
     $scope.id = "playerId1"
-    $scope.messageType = "success"
-    $scope.broadcastType = "success"
+    $scope.message = ""
     $scope.set = 0
     $scope.otherPlayers = [
         {name: "playerName2", id: "playerId2"},
@@ -101,14 +101,12 @@ app.controller('cards', ($scope)=>{
         req.command = "ping"
         $scope.id = req.params.id
         $scope.name = req.params.name
+        req.params.state = state.state
         bring(state.server, JSON.stringify(req))
         .then(resp => {
-            console.log("In ping", resp)            
-            $scope.message = resp.message
+            resp.messages.forEach( message => putMessage(message) )
 
             if(resp.status == "failed"){
-                // display message and refresh vars
-                $scope.messageType = "danger"
                 $scope.$digest()
                 return
             }
@@ -116,11 +114,11 @@ app.controller('cards', ($scope)=>{
             // if there was no state change nor status failed
             // there is no message
             if(resp.state == state.state) return
-            console.log("State change detected")
-            $scope.messageType = "success"
-            M.style.display = ""
 
-            console.log("display is"+ M.style.display+" wagamama")
+            console.log("State change detected")
+
+
+            // the most important of all: update the state of the app
             state.state = resp.state
             sections = document.querySelectorAll(".cards")
             
@@ -188,20 +186,21 @@ app.controller('cards', ($scope)=>{
         .catch(err=> console.log(err))
     }
     setInterval($scope.ping, 3000)
+
     $scope.play = ()=>{
         req.command = "play"
         req.params.opp = $scope.askedOpponent
         req.params.card = {num:$scope.number, suit:$scope.suit}
         bring(state.server, JSON.stringify(req))
         .then(resp => {
-            console.log("Inside Play", resp)
-            if(resp.status=='success')$scope.ping()
-            else{ // player made some error
-                $scope.message = resp.message
-                $scope.messageType = "danger"
-                M.style.display = ""
+            if(resp.status=='success')
+                $scope.ping()
+            else{
                 $scope.$digest()
-                throw new Error(resp.message)
+                putMessage({
+                    sender:'console', 
+                    value:resp.message 
+                })
             }
         })
         .catch(err => console.log(err))
@@ -212,14 +211,42 @@ app.controller('cards', ($scope)=>{
         req.params.set = $scope.set
         bring(state.server, JSON.stringify(req))
         .then(resp=>{
-            console.log("Inside Call", resp)
-            $scope.messageType = resp.flag
-            if(resp.status=='success')$scope.ping()
-            else{ // player made some error
-                $scope.message = resp.message
-                M.style.display = ""
+            if(resp.status=='success')
+                $scope.ping()
+            else{
                 $scope.$digest()
-                throw new Error(resp.message)
+                putMessage({
+                    sender:'console', 
+                    value:resp.message 
+                })
+            }
+        })
+        .catch(err=> console.log(err))
+    }
+
+    $scope.sendMessage = ()=>{
+        // do not send empty message
+        console.log("Inside sendMessage")
+
+        req.command = "takeMessage"
+        let effective = $scope.message.replace(/(\r\n|\n|\r)/gm, "")
+        if(effective == "") return
+
+        // send the message to the server and make textarea blank
+        req.params.message = $scope.message
+        console.log(req)
+
+        bring(state.server, JSON.stringify(req))
+        .then(resp=>{
+            $scope.message = ""
+            if(resp.status=='success')
+                $scope.ping()
+            else{
+                $scope.$digest()
+                putMessage({
+                    sender:'console', 
+                    value:resp.message 
+                })
             }
         })
         .catch(err=> console.log(err))

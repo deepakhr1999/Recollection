@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="downloaded/css/all.css">
     <link href="downloaded/css/bootstrap.min.css" rel="stylesheet">
     <link href="downloaded/css/mdb.min.css" rel="stylesheet">
-    <link href="downloaded/fonts/Raleway.css" rel="stylesheet">
-    <link href="downloaded/fonts/Nunito.css" rel="stylesheet">
+    <link href="downloaded/fonts/Trebuchet.css" rel="stylesheet">
     <script src="downloaded/js/angular.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/cards.css">
@@ -41,11 +40,11 @@
         </div>
       </div>
     </div>
-    <div class="window">
+    <div class="window" ng-controller="cards">
       <!-- Game -->
-      <div class="col-8 container align-self-center reply-darkest" ng-controller="cards" id="cards">          
+      <div class="col-8 container align-self-center reply-darkest" id="cards">          
           <!-- Players info -->
-          <div class="row align-items-stretch">
+          <div class="row m-0 align-items-stretch">
             
             <!-- Username -->
             <div class="col turn" id="id-{{id}}" ng-click="ping()" style="flex-grow: 3;">
@@ -178,9 +177,9 @@
             <section class="cards container"></section>
           </div>
           
-          <div class="w-100 alert alert-{{ messageType }}" id="alert" onclick="this.style.display='none'" style="display:none">
+          <!-- <div class="w-100 alert alert-{{ messageType }}" id="alert" onclick="this.style.display='none'" style="display:none">
             {{ message }}
-          </div>
+          </div> -->
           <!-- Reponse form -->
           
         </div>
@@ -189,31 +188,28 @@
       <!-- All chat -->
       <div class="col-4 container d-flex flex-column" id="all-chat">
 
-        <div class="h1 m-0 header reply-darkest" style="padding: 0.71em">
+        <div class="h3 m-0 header reply-darkest text-center" style="padding: 1.28em;">
           Messages
         </div>
 
-        <div class="content m-0 flex-grow-1">
+        <div class="content m-0 flex-grow-1" id="chatbox">
           <div class="message">
-            <div class="message-sender">Deepak</div>
-            <div class="message-text">Hello World</div>
+            <span>Deepak</span> Hello world
           </div>
           <div class="message">
-            <div class="message-sender">Deepak</div>
-            <div class="message-text">Hello World</div>
+            <span>Deepak</span> Hello world and this is a very long message. The quick brown fox jumps over the lazy dog
           </div>
           <div class="message">
-            <div class="message-console">You have won this game!</div>
+            <div class="message-console">Call by someone failed</div>
           </div>
           <div class="message">
-            <div class="message-sender">Deepak</div>
-            <div class="message-text">Hello World</div>
+            <span>Deepak</span> Hello world
           </div>
         </div>
 
         <div class="row footer m-0 align-items-stretch">
-          <textarea class="flex-grow-1 reply-darkest p-1" style="border: none;"></textarea>
-          <button class="btn m-0 reply-orange">Send</button>
+          <textarea class="flex-grow-1 reply-darkest p-1" style="border: none;" ng-model="message"></textarea>
+          <button class="btn m-0 reply-orange" ng-click="sendMessage()" >Send</button>
         </div>
       </div>
     </div>

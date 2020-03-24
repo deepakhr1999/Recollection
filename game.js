@@ -9,6 +9,8 @@ class Game{
         this.id = "hellothere"
         this.wins = [[], []] // contains the sets won by team 0 and team 1
         this.turn = ""
+        this.messages = ["Welcome To the game"],
+        this.ended = false
     }
 
     process(request){ // request {password, command, params}
@@ -44,7 +46,32 @@ class Game{
         }
         if(!info.found)
             return res
-        else{
+        else {
+            //win condition added here
+            let first = this.wins[0].length
+            let second = this.wins[1].length
+            console.log(first, second, this.ended)
+            if (!this.ended &&  first+second == 8){
+                console.log("Game ended!")
+                this.ended = true
+                //we are adding 2 messages, that's why
+                this.state = this.state + 2
+
+                // check if this is a win or a draw!
+                let x = ""
+                if (first == 4)
+                    x = "The match is a draw!"
+                else if (first > 4)
+                    x = "The match has been won by Team 1 !!"
+                else
+                    x = "The match has been won by Team 2 !!"
+
+                this.messages.push({sender:"console", value: x})
+                this.messages.push({
+                    sender: "console",
+                    value: "The match has ended. However, you can continue to chat in the same session. Restart the server to start a new game."
+                })                
+            }
             res = {
                 status: 'success',
                 state: this.state,
@@ -55,9 +82,11 @@ class Game{
                 opp : info.opp,
                 wins: this.wins[info.team],
                 losses: this.wins[ 1 - info.team ],
-                turn: this.turn
+                turn: this.turn,
+                messages: this.messages.slice(params.state+1)
             }
             this.players.forEach(player => res.others.push({name:player.name, id: player.id}))
+
             return res
         }
     }
@@ -72,6 +101,7 @@ class Game{
         if(this.isInGame(params.id).found){
             res.message = "Reconnected"
             res.status = "success"
+            this.messages.push({sender: "console", value:"You have reconnected to the game"})
             this.state++
             return res
         }
@@ -86,8 +116,9 @@ class Game{
         res.message = "Connection successfull"
 
         // update players
-        this.state++
         this.broadcast = params.name + " has connected to the network"
+        this.messages.push({sender: "console", value: this.broadcast})
+        this.state++
         this.players.push( new Person(params.id, params.name) )
 
         //give cards to everyone if 4 are connected and set turn as first.id
@@ -104,7 +135,6 @@ class Game{
     play(params){ // id, name, oppoid, card
         //asking card only
         // check if opponent is in game
-        console.log("turn is ", this.turn)
         params.card = new Card(params.card.num, params.card.suit)
         if(this.turn != params.id) return {status:"failed", message:"Oops! not your turn yet"}
         var temp = this.isInGame(params.opp) 
@@ -122,25 +152,26 @@ class Game{
         if(self.cards[setIndex].length==0)return {status: "failed", message: "Cannot ask if you have empty set"}
 
         // valid query, so increment state
-        this.state++
-
+        
         //remove the card from the opponent and set broadcast
         var opponent = this.players[temp.index]
         var isRemoved = opponent.removeCard(params.card)
-
+        
         var resp = {}
         if(isRemoved){
-            resp =  {status: "success", message:`Removed ${params.card.num} ${params.card.suit} from ${opponent.name}!`, flag:"success"}
+            resp =  {status: "success", message:`Removed ${params.card.num} ${params.card.suit} from ${opponent.id}!`, flag:"success"}
             // add the card to asker
             self.cards[setIndex].push(params.card)
         }
         else {
             this.turn = opponent.id
-            resp = {status: "success", message: `${opponent.name} does not have ${params.card.num} ${params.card.suit}`, flag:"danger"}
+            resp = {status: "success", message: `${opponent.id} does not have ${params.card.num} ${params.card.suit}`, flag:"danger"}
         }
         this.broadcast = resp.message
-        console.log("responded with ")
-        console.log(resp)
+        // console.log("responded with ")
+        // console.log(resp)
+        this.messages.push( {sender:"console", value:this.broadcast} )
+        this.state++
         return resp
     }
 
@@ -158,8 +189,7 @@ class Game{
             return {status: "failed", message: "Cannot ask if you have empty set", "flag": "danger"}
 
         // this is a valid call
-        this.state++
-
+        
         // check if they collectively have the entire set
         var mateCards = this.players[stats.mate].cards[params.set]
         var allCards = selfCards.concat(mateCards)
@@ -167,14 +197,14 @@ class Game{
         var correct = false        
         if(isLower) correct = (allCards.length == 7)
         else correct = (allCards.length == 6)
-
+        
         //either way removeSet from everyone 
         this.players.forEach((p)=>p.removeSet(params.set))
-
+        
         // then give the set to the winning team
         var team = correct*stats.team + !correct * !stats.team
         this.wins[team].push(params.set)
-
+        
         // construct a response
         var resp = {}
         if(correct) {
@@ -182,9 +212,20 @@ class Game{
         } else {
             resp = {status: 'success', message:`Call by ${params.id} FAILED! got the set ${params.set}`, "flag": "danger"}
         }
-
+        
         this.broadcast = resp.message
+        this.messages.push({sender: "console", value: resp.message})
+        this.state++
         return resp
     }
+
+    takeMessage(params){ //id, message
+        let info = this.isInGame(params.id)
+        if( ! info.found ) return {status: "failure", message: "You are not a part of the game" }
+        this.messages.push( {sender: params.id, value: params.message} )
+        this.state++
+        return {status: "success", message: "delivered"}
+    }
+
 }
 module.exports = Game
