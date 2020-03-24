@@ -25,8 +25,8 @@ var state = {
 
 app.controller('connect', function($scope) {
     $scope.print = console.log
-    $scope.server = state.server
-    $scope.password = "wagamama"
+    $scope.server = GLOBALS.SERVER
+    $scope.password = GLOBALS.PASSWORD
     $scope.connect = ()=> {
         req.password = $scope.password
         state.server = $scope.server

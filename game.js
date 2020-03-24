@@ -1,10 +1,11 @@
 const Person = require('./person.js')
 const Card = require('./card.js')
+
 class Game{
     constructor(password){
         this.password = password
         this.players = []
-        this.state = 0
+        this.state = 1
         this.broadcast = "Game init"
         this.id = "hellothere"
         this.wins = [[], []] // contains the sets won by team 0 and team 1
@@ -14,7 +15,6 @@ class Game{
     }
 
     process(request){ // request {password, command, params}
-        // console.log(request)
         if(this.password != request.password)
             return {
                 status: 'failed',
@@ -25,21 +25,22 @@ class Game{
             return this[request.command](request.params)
     }
 
-    isInGame(id){
+    isInGame(id, name="", matchName=false){
         var mate = 0
         var opp = []
         for( var i=0; i<this.players.length; i++){
             if (i%2 == 0) mate = i+1; else mate = i-1
             if(i>=2) opp = [0,1]; else opp = [2,3]
             if(this.players[i].id == id){
-                return {found: true, index : i, mate: mate, opp: opp, team: Math.floor(i/2)}
+                if(this.players[i].name == name || !matchName)
+                    return {found: true, index : i, mate: mate, opp: opp, team: Math.floor(i/2)}
             }
         }
         return {found: false}
     }
 
     ping(params){
-        let info = this.isInGame(params.id)
+        let info = this.isInGame(params.id, params.name, true)
         let res = {
             status: "failure", 
             message: 'You have not connected to the game'
@@ -85,7 +86,7 @@ class Game{
                 turn: this.turn,
                 messages: this.messages.slice(params.state+1)
             }
-            this.players.forEach(player => res.others.push({name:player.name, id: player.id}))
+            this.players.forEach(player => res.others.push({name:"", id: player.id}))
 
             return res
         }
@@ -98,7 +99,7 @@ class Game{
         }
 
         //check if the same person is there
-        if(this.isInGame(params.id).found){
+        if(this.isInGame(params.id, params.name, true).found){
             res.message = "Reconnected"
             res.status = "success"
             this.messages.push({sender: "console", value:"You have reconnected to the game"})
@@ -116,7 +117,7 @@ class Game{
         res.message = "Connection successfull"
 
         // update players
-        this.broadcast = params.name + " has connected to the network"
+        this.broadcast = params.id + " has connected to the network"
         this.messages.push({sender: "console", value: this.broadcast})
         this.state++
         this.players.push( new Person(params.id, params.name) )
@@ -141,7 +142,7 @@ class Game{
         if(! temp.found) return {status: "failed", message:"Opponent not in game!"}
 
         // check if the user has the card
-        var self = this.isInGame(params.id)
+        var self = this.isInGame(params.id, params.name, true)
         if(! self.found) return {status: "failed", message:"You are not in game!"}
         self = this.players[self.index]
         self.cards.forEach(l=>console.log(l))
@@ -177,7 +178,7 @@ class Game{
 
     call(params){ // id, name, set(number)
         console.log("Called call function")
-        var stats = this.isInGame(params.id)
+        var stats = this.isInGame(params.id, params.name, true)
         if(!stats.found){//then the person is not in game
             return {status: "failed", message: "You are not in game", "flag": "danger"}
         }
@@ -220,7 +221,7 @@ class Game{
     }
 
     takeMessage(params){ //id, message
-        let info = this.isInGame(params.id)
+        let info = this.isInGame(params.id, params.name, true)
         if( ! info.found ) return {status: "failure", message: "You are not a part of the game" }
         this.messages.push( {sender: params.id, value: params.message} )
         this.state++

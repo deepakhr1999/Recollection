@@ -16,29 +16,7 @@
     <title>LITERATURE</title>
   </head>
   <body ng-app="myApp">
-    <div class="window" >
-      <div ng-controller="connect" class="container col-4 animated bounceInUp slow" id='connect'>
-        <legend class="danger-color-dark">Credentials</legend>
-        <div class="md-form">
-          <input type="text" value="h" class="form-control" ng-model="server">
-          <label>Server</label>
-        </div>
-        <div class="md-form">
-          <input type="text" value="h" class="form-control" ng-model="password">
-          <label>Password</label>
-        </div>
-        <div class="md-form">
-          <input type="text" value="h" class="form-control" ng-model="id">
-          <label>Id</label>
-        </div>
-        <div class="md-form">
-          <input type="text" value="h" class="form-control" ng-model="name">
-          <label>Secret</label>
-        </div>
-        <div class="text-center">
-           <a class="btn danger-color-dark white-text col-6 mx-auto" ng-click="connect()" href="#cards">Connect</a>
-        </div>
-      </div>
+    <div ng-controller="connect">
     </div>
     <div class="window" ng-controller="cards">
       <!-- Game -->
@@ -192,20 +170,7 @@
           Messages
         </div>
 
-        <div class="content m-0 flex-grow-1" id="chatbox">
-          <div class="message">
-            <span>Deepak</span> Hello world
-          </div>
-          <div class="message">
-            <span>Deepak</span> Hello world and this is a very long message. The quick brown fox jumps over the lazy dog
-          </div>
-          <div class="message">
-            <div class="message-console">Call by someone failed</div>
-          </div>
-          <div class="message">
-            <span>Deepak</span> Hello world
-          </div>
-        </div>
+        <div class="content m-0 flex-grow-1" id="chatbox"></div>
 
         <div class="row footer m-0 align-items-stretch">
           <textarea class="flex-grow-1 reply-darkest p-1" style="border: none;" ng-model="message"></textarea>
