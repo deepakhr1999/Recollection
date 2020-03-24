@@ -10,7 +10,7 @@ class Game{
         this.id = "hellothere"
         this.wins = [[], []] // contains the sets won by team 0 and team 1
         this.turn = ""
-        this.messages = ["Welcome To the game"],
+        this.messages = ["", {sender:"console", value:"Welcome To the game"}],
         this.ended = false
     }
 
