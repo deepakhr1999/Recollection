@@ -194,11 +194,10 @@ class Game{
         // check if they collectively have the entire set
         var mateCards = this.players[stats.mate].cards[params.set]
         var allCards = selfCards.concat(mateCards)
-        var isLower = params.set%2
+        var isHigher = params.set%2
         var correct = false        
-        if(isLower) correct = (allCards.length == 7)
-        else correct = (allCards.length == 6)
-        
+        if(isHigher) correct = (allCards.length == 6)
+        else correct = (allCards.length == 7)
         //either way removeSet from everyone 
         this.players.forEach((p)=>p.removeSet(params.set))
         
